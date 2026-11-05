@@ -398,4 +398,5 @@ Sumber: Gambar referensi desain UI/UX dan instruksi tema Emerald Green & White G
 | 1.0 | 05/11/2026 | Dokumen awal spesifikasi webapp MySPACE berdasarkan instruksi user dan 5 gambar referensi | code.gs, setup.gs, index.html |
 | 1.1 | 05/11/2026 | UBAH: Menyimpan link exec Web App Apps Script resmi ke dalam index.html dan PRD.md | index.html, PRD.md |
 | 1.2 | 05/11/2026 | UBAH: Menu Kantong murni finansial (tanpa widget catatan/inline form transaksi), transaksi hanya via modal tombol (+). TAMBAH: Fitur Custom Kategori via tombol kecil & sheet categories | code.gs, setup.gs, index.html, PRD.md |
+| 1.3 | 05/11/2026 | UBAH: Penyempurnaan ergonomi UI mobile (mobile top header MySPACE, modal bottom-sheet, tactile keypad haptics, safe-area inset & kartu metrik 2x2 presisi) | index.html, PRD.md |
 

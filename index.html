@@ -1202,14 +1202,25 @@
     }
 
     /* ==========================================================================
-       RESPONSIVE BREAKPOINTS
+       RESPONSIVE BREAKPOINTS & MOBILE-FIRST OPTIMIZATIONS
        ========================================================================== */
+    .mobile-top-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      margin-bottom: 16px;
+      background: rgba(6, 44, 34, 0.7);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+    }
+
     @media (max-width: 1180px) {
       .metrics-grid {
         grid-template-columns: repeat(2, 1fr);
-      }
-      .dashboard-grid {
-        grid-template-columns: 1fr;
       }
       .charts-row {
         grid-template-columns: 1fr;
@@ -1228,10 +1239,22 @@
         display: none;
       }
       .main-content {
-        padding: 18px 16px 110px;
+        padding: 14px 14px calc(90px + env(safe-area-inset-bottom, 0px));
+      }
+      .topbar {
+        margin-bottom: 18px;
+      }
+      .topbar-actions {
+        display: none;
       }
       .mobile-bottom-bar {
         display: flex;
+        bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+        left: 14px;
+        right: 14px;
+        max-width: 460px;
+        margin: 0 auto;
+        height: 64px;
       }
       .desktop-only {
         display: none !important;
@@ -1245,6 +1268,106 @@
       .sticky-grid {
         grid-template-columns: 1fr;
       }
+      
+      /* Mobile Metrics Card 2x2 */
+      .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin-bottom: 18px;
+      }
+      .metric-card {
+        padding: 14px 12px;
+        border-radius: var(--radius-md);
+      }
+      .metric-header {
+        font-size: 11px;
+        margin-bottom: 8px;
+      }
+      .metric-icon-box {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+      }
+      .metric-icon-box svg {
+        width: 16px;
+        height: 16px;
+      }
+      .metric-val {
+        font-size: 17px;
+        margin-bottom: 4px;
+      }
+      .circle-progress {
+        width: 40px;
+        height: 40px;
+      }
+      .circle-progress::before {
+        width: 30px;
+        height: 30px;
+      }
+      .circle-progress span {
+        font-size: 10px;
+      }
+
+      /* Bottom Sheet Mobile Modal */
+      .modal-backdrop {
+        align-items: flex-end;
+        padding: 0;
+      }
+      .modal-card {
+        max-width: 100%;
+        max-height: 88vh;
+        max-height: 88dvh;
+        border-radius: 28px 28px 0 0;
+        padding: 16px 16px calc(24px + env(safe-area-inset-bottom, 0px));
+        border-bottom: none;
+        animation: slideUpMobile 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .modal-card::before {
+        content: '';
+        display: block;
+        width: 40px;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.25);
+        border-radius: 4px;
+        margin: 0 auto 12px;
+      }
+      .keypad-grid {
+        gap: 6px;
+        margin-top: 10px;
+      }
+      .key-btn {
+        padding: 10px;
+        font-size: 19px;
+        height: 48px;
+        border-radius: var(--radius-sm);
+      }
+      .categories-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 6px;
+      }
+      .cat-btn {
+        padding: 8px 2px;
+        font-size: 10px;
+      }
+      .nominal-display-box {
+        padding: 10px 14px;
+      }
+      .nominal-display-box .value {
+        font-size: 24px;
+      }
+      .quick-chips {
+        gap: 6px;
+        margin: 8px 0 !important;
+      }
+      .chip {
+        padding: 7px 4px;
+        font-size: 11px;
+      }
+    }
+
+    @keyframes slideUpMobile {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
     }
 
     @media (min-width: 901px) {
@@ -1378,6 +1501,23 @@
       <!-- MAIN CONTENT WRAPPER -->
       <main class="main-content">
         
+        <!-- MOBILE TOP BAR (App Header on Mobile) -->
+        <div class="mobile-top-header mobile-only">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <img src="assets/logo-web.png" alt="MySPACE" style="height: 28px; width: auto;">
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <button class="period-badge-btn" style="padding: 6px 12px; font-size: 11px;" onclick="openPeriodModal()">
+              <span id="mobile-period-label">Mei 2026</span>
+            </button>
+            <button class="icon-btn" style="width: 36px; height: 36px;" onclick="showToast('Semua data telah tersinkronisasi dengan aman.')">
+              <svg class="icon" style="width: 17px; height: 17px;" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
+              <div class="dot-badge" style="top: 8px; right: 8px;"></div>
+            </button>
+            <div class="avatar-circle" id="mobile-avatar-circle" style="width: 34px; height: 34px; font-size: 12px; cursor: pointer;" onclick="switchView('pengaturan')">F</div>
+          </div>
+        </div>
+
         <!-- PWA INSTALL BANNER -->
         <div id="pwa-install-banner" class="pwa-banner">
           <div style="display: flex; align-items: center; gap: 12px;">
@@ -2571,11 +2711,14 @@
       const name = currentUser.username || 'User';
       document.getElementById('user-display-name').innerText = name;
       document.getElementById('user-avatar-initial').innerText = name.charAt(0).toUpperCase();
+      if (document.getElementById('mobile-avatar-circle')) {
+        document.getElementById('mobile-avatar-circle').innerText = name.charAt(0).toUpperCase();
+      }
 
       // Set input tanggal default hari ini
       const today = new Date().toISOString().split('T')[0];
-      document.getElementById('quick-tx-date').value = today;
-      document.getElementById('modal-tx-date').value = today;
+      if (document.getElementById('quick-tx-date')) document.getElementById('quick-tx-date').value = today;
+      if (document.getElementById('modal-tx-date')) document.getElementById('modal-tx-date').value = today;
 
       // Muat data dari server / local
       await loadUserData();
@@ -2679,6 +2822,9 @@
       const monthStr = MONTH_NAMES[selectedMonth];
       const label = `${monthStr} ${selectedYear}`;
       document.getElementById('active-period-label').innerText = label;
+      if (document.getElementById('mobile-period-label')) {
+        document.getElementById('mobile-period-label').innerText = label;
+      }
       document.getElementById('period-month-select').value = selectedMonth;
       document.getElementById('period-year-select').value = selectedYear;
       document.getElementById('strip-period-text').innerText = label;
@@ -3321,6 +3467,9 @@
       modalTxType = type;
       document.getElementById('modal-tab-pengeluaran').classList.toggle('active', type === 'Pengeluaran');
       document.getElementById('modal-tab-pemasukan').classList.toggle('active', type === 'Pemasukan');
+      const title = modalEditingId ? `Edit ${type}` : `Catat ${type}`;
+      document.getElementById('modal-tx-title').innerText = title;
+      document.getElementById('modal-submit-btn-label').innerText = modalEditingId ? 'Simpan Perubahan' : `Simpan ${type}`;
     }
 
     function selectModalCategory(cat, el) {
@@ -3335,6 +3484,9 @@
     }
 
     function pressKeypad(val) {
+      if (navigator.vibrate) {
+        try { navigator.vibrate(12); } catch (e) {}
+      }
       let str = String(modalTxAmount);
       if (val === 'backspace') {
         str = str.slice(0, -1);
