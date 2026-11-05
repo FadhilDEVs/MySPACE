@@ -1204,6 +1204,238 @@
     /* ==========================================================================
        RESPONSIVE BREAKPOINTS & MOBILE-FIRST OPTIMIZATIONS
        ========================================================================== */
+        /* Mobile User Pill in Top Header */
+    .mobile-user-pill {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 4px 12px 4px 5px;
+      border-radius: var(--radius-full);
+      background: rgba(6, 44, 34, 0.65);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .mobile-user-pill:active {
+      background: rgba(16, 185, 129, 0.22);
+      border-color: var(--primary);
+    }
+    .mobile-user-pill .avatar-circle {
+      width: 26px;
+      height: 26px;
+      font-size: 11px;
+    }
+    .mobile-user-pill .user-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    /* Mobile Kantong Content */
+    .mobile-kantong-content {
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* Mobile Summary Pill */
+    .mobile-summary-pill {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 9px 14px;
+      background: rgba(6, 44, 34, 0.72);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: var(--radius-full);
+      font-size: 11.5px;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      user-select: none;
+      transition: all 0.2s ease;
+    }
+    .mobile-summary-pill:active {
+      border-color: var(--primary);
+      transform: scale(0.99);
+    }
+    .mob-sum-period {
+      font-weight: 600;
+      color: #fff;
+      white-space: nowrap;
+    }
+    .mob-sum-divider {
+      color: rgba(255, 255, 255, 0.3);
+      margin: 0 4px;
+    }
+    .mob-sum-stat {
+      white-space: nowrap;
+      color: rgba(255, 255, 255, 0.85);
+    }
+    .mob-sum-stat b.in {
+      color: #34D399;
+      font-weight: 700;
+    }
+    .mob-sum-stat b.out {
+      color: #F87171;
+      font-weight: 700;
+    }
+
+    /* Mobile Filter Segment Tabs */
+    .mobile-filter-tabs {
+      display: flex;
+      background: rgba(6, 44, 34, 0.65);
+      border: 1px solid rgba(16, 185, 129, 0.22);
+      border-radius: var(--radius-full);
+      padding: 4px;
+      gap: 4px;
+    }
+    .mob-filter-tab {
+      flex: 1;
+      text-align: center;
+      padding: 8px 12px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      color: rgba(255, 255, 255, 0.7);
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+    .mob-filter-tab.active {
+      background: linear-gradient(135deg, #10B981, #059669);
+      color: #fff;
+      font-weight: 700;
+      box-shadow: 0 0 16px rgba(16, 185, 129, 0.4);
+    }
+
+    /* Mobile Search Pill */
+    .mobile-search-wrapper {
+      position: relative;
+    }
+    .mobile-search-wrapper .search-icon {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 17px;
+      height: 17px;
+      color: rgba(255, 255, 255, 0.45);
+      pointer-events: none;
+    }
+    .mobile-search-input {
+      width: 100%;
+      background: rgba(6, 44, 34, 0.65);
+      border: 1px solid rgba(16, 185, 129, 0.22);
+      border-radius: var(--radius-full);
+      padding: 11px 18px 11px 44px;
+      color: #fff;
+      font-size: 13.5px;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+    .mobile-search-input:focus {
+      border-color: #34D399;
+      box-shadow: 0 0 16px rgba(16, 185, 129, 0.3);
+    }
+
+    /* Mobile Kantong Transaction Cards */
+    .kantong-tx-card {
+      background: rgba(6, 44, 34, 0.55);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(16, 185, 129, 0.22);
+      border-radius: 18px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+      cursor: pointer;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+      margin-bottom: 10px;
+    }
+    .kantong-tx-card:active {
+      transform: scale(0.99);
+      border-color: rgba(52, 211, 153, 0.5);
+    }
+    .kantong-tx-badge {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .kantong-tx-badge.income {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(52, 211, 153, 0.35);
+      color: #34D399;
+    }
+    .kantong-tx-badge.expense {
+      background: rgba(248, 113, 113, 0.15);
+      border: 1px solid rgba(248, 113, 113, 0.35);
+      color: #F87171;
+    }
+    .kantong-tx-badge svg {
+      width: 20px;
+      height: 20px;
+      stroke-width: 2.5;
+    }
+    .kantong-tx-info {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .kantong-tx-title {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .kantong-tx-meta {
+      font-size: 11.5px;
+      color: rgba(255, 255, 255, 0.6);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .kantong-tx-end {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-align: right;
+    }
+    .kantong-tx-amount {
+      font-size: 14.5px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .kantong-tx-amount.income {
+      color: #34D399;
+    }
+    .kantong-tx-amount.expense {
+      color: #F87171;
+    }
+    .kantong-tx-box {
+      width: 17px;
+      height: 17px;
+      border: 1.5px solid rgba(255, 255, 255, 0.45);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255, 255, 255, 0.45);
+      opacity: 0.8;
+    }
+
     .mobile-top-header {
       display: flex;
       align-items: center;
@@ -1227,7 +1459,7 @@
       }
     }
 
-    @media (max-width: 900px) {
+        @media (max-width: 900px) {
       .auth-container {
         grid-template-columns: 1fr;
         max-width: 440px;
@@ -1242,10 +1474,16 @@
         padding: 14px 14px calc(90px + env(safe-area-inset-bottom, 0px));
       }
       .topbar {
-        margin-bottom: 18px;
+        display: none !important;
       }
       .topbar-actions {
         display: none;
+      }
+      .mobile-kantong-content {
+        display: flex !important;
+      }
+      .desktop-dashboard-content {
+        display: none !important;
       }
       .mobile-bottom-bar {
         display: flex;
@@ -1374,6 +1612,12 @@
       .mobile-only {
         display: none !important;
       }
+      .mobile-kantong-content {
+        display: none !important;
+      }
+      .desktop-dashboard-content {
+        display: block !important;
+      }
     }
   </style>
 </head>
@@ -1501,21 +1745,18 @@
       <!-- MAIN CONTENT WRAPPER -->
       <main class="main-content">
         
-        <!-- MOBILE TOP BAR (App Header on Mobile) -->
+        <!-- MOBILE TOP BAR (App Header on Mobile - 100% Matching Reference) -->
         <div class="mobile-top-header mobile-only">
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <img src="assets/logo-web.png" alt="MySPACE" style="height: 28px; width: auto;">
+          <div style="display: flex; align-items: center; gap: 9px;">
+            <img src="assets/icon-192.png" alt="MySPACE Logo" style="width: 32px; height: 32px; border-radius: 9px; object-fit: contain;">
+            <span style="font-size: 19px; font-weight: 800; color: #ffffff; letter-spacing: -0.3px;">MySPACE</span>
           </div>
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <button class="period-badge-btn" style="padding: 6px 12px; font-size: 11px;" onclick="openPeriodModal()">
-              <span id="mobile-period-label">Mei 2026</span>
-            </button>
-            <button class="icon-btn" style="width: 36px; height: 36px;" onclick="showToast('Semua data telah tersinkronisasi dengan aman.')">
-              <svg class="icon" style="width: 17px; height: 17px;" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
-              <div class="dot-badge" style="top: 8px; right: 8px;"></div>
-            </button>
-            <div class="avatar-circle" id="mobile-avatar-circle" style="width: 34px; height: 34px; font-size: 12px; cursor: pointer;" onclick="switchView('pengaturan')">F</div>
+          <div class="mobile-user-pill" onclick="switchView('pengaturan')" title="Pengaturan Akun">
+            <div class="avatar-circle" id="mobile-avatar-circle">F</div>
+            <span class="user-name" id="mobile-user-name">Fadhil</span>
+            <svg class="icon" style="width: 14px; height: 14px; color: rgba(255, 255, 255, 0.7);" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"></path></svg>
           </div>
+        </div>
         </div>
 
         <!-- PWA INSTALL BANNER -->
@@ -1564,6 +1805,39 @@
              ==================================================================== -->
         <section id="view-dashboard" class="page-view">
           
+          <!-- MOBILE KANTONG VIEW (100% matched to reference image) -->
+          <div class="mobile-kantong-content mobile-only">
+            <!-- Top Period & Summary Strip -->
+            <div class="mobile-summary-pill" onclick="openPeriodModal()" title="Klik untuk ubah periode">
+              <span class="mob-sum-period" id="mob-kantong-period-count">November 2026 • 13 Transaksi</span>
+              <span class="mob-sum-divider">|</span>
+              <span class="mob-sum-stat">Masuk: <b class="in" id="mob-kantong-masuk">formatRupiah(curMasuk)656.504</b></span>
+              <span class="mob-sum-divider">|</span>
+              <span class="mob-sum-stat">Keluar: <b class="out" id="mob-kantong-keluar">formatRupiah(curMasuk)383.225</b></span>
+            </div>
+
+            <!-- Segmented Filter Tabs -->
+            <div class="mobile-filter-tabs">
+              <div class="mob-filter-tab active" id="mob-filter-all" onclick="setMobileTxFilter('all')">Semua</div>
+              <div class="mob-filter-tab" id="mob-filter-income" onclick="setMobileTxFilter('Pemasukan')">Pemasukan</div>
+              <div class="mob-filter-tab" id="mob-filter-expense" onclick="setMobileTxFilter('Pengeluaran')">Pengeluaran</div>
+            </div>
+
+            <!-- Search Input -->
+            <div class="mobile-search-wrapper">
+              <svg class="icon search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" x2="16.65" y1="21" y2="16.65"></line></svg>
+              <input type="text" id="mob-kantong-search" class="mobile-search-input" placeholder="Cari transaksi..." oninput="renderMobileKantongList()">
+            </div>
+
+            <!-- Stack of Transaction Cards -->
+            <div class="mobile-tx-stack" id="mob-kantong-tx-list">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- DESKTOP DASHBOARD CONTENT -->
+          <div class="desktop-dashboard-content desktop-only">
+          
           <!-- 4 METRICS CARDS -->
           <div class="metrics-grid">
             <!-- 1. Total Saldo -->
@@ -1574,7 +1848,7 @@
                   <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
                 </div>
               </div>
-              <div class="metric-val" id="dash-total-saldo">Rp 0</div>
+              <div class="metric-val" id="dash-total-saldo">formatRupiah(curMasuk)0</div>
               <div class="metric-footer">
                 <span class="trend-indicator trend-up" id="dash-saldo-trend">
                   <svg class="icon" style="width: 14px; height: 14px;" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
@@ -1591,7 +1865,7 @@
                   <svg class="icon" viewBox="0 0 24 24"><line x1="12" x2="12" y1="5" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
                 </div>
               </div>
-              <div class="metric-val" id="dash-pemasukan" style="color: #34D399;">Rp 0</div>
+              <div class="metric-val" id="dash-pemasukan" style="color: #34D399;">formatRupiah(curMasuk)0</div>
               <div class="metric-footer">
                 <span class="trend-indicator trend-up" id="dash-pemasukan-trend">
                   <svg class="icon" style="width: 14px; height: 14px;" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline></svg>
@@ -1608,7 +1882,7 @@
                   <svg class="icon" viewBox="0 0 24 24"><line x1="12" x2="12" y1="19" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
                 </div>
               </div>
-              <div class="metric-val" id="dash-pengeluaran" style="color: #F87171;">Rp 0</div>
+              <div class="metric-val" id="dash-pengeluaran" style="color: #F87171;">formatRupiah(curMasuk)0</div>
               <div class="metric-footer">
                 <span class="trend-indicator trend-down" id="dash-pengeluaran-trend">
                   <svg class="icon" style="width: 14px; height: 14px;" viewBox="0 0 24 24"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"></polyline></svg>
@@ -1630,8 +1904,8 @@
                   <span id="dash-budget-pct">72%</span>
                 </div>
                 <div>
-                  <div class="metric-val" id="dash-budget-val" style="font-size: 20px; margin-bottom: 2px;">Rp 3.000.000</div>
-                  <div style="font-size: 11px; color: var(--text-muted);" id="dash-budget-remain">Tersisa Rp 850.000</div>
+                  <div class="metric-val" id="dash-budget-val" style="font-size: 20px; margin-bottom: 2px;">formatRupiah(curMasuk)3.000.000</div>
+                  <div style="font-size: 11px; color: var(--text-muted);" id="dash-budget-remain">Tersisa formatRupiah(curMasuk)850.000</div>
                 </div>
               </div>
             </div>
@@ -1655,7 +1929,7 @@
               <div class="glass-card chart-card">
                 <div class="section-header">
                   <h3>Komposisi Pengeluaran</h3>
-                  <span id="dash-donut-total" style="font-size: 12px; font-weight: 700; color: #34D399;">Rp 0 Total</span>
+                  <span id="dash-donut-total" style="font-size: 12px; font-weight: 700; color: #34D399;">formatRupiah(curMasuk)0 Total</span>
                 </div>
                 <div class="chart-container">
                   <canvas id="categoryDonutChart"></canvas>
@@ -1705,6 +1979,7 @@
             </div>
 
           </div>
+          </div> <!-- /desktop-dashboard-content -->
 
         </section>
 
@@ -1771,21 +2046,21 @@
               <div class="summary-item">
                 <div class="info">
                   <h5>Total Pemasukan</h5>
-                  <p id="strip-income-text" style="color: #34D399;">+ Rp 0</p>
+                  <p id="strip-income-text" style="color: #34D399;">+ formatRupiah(curMasuk)0</p>
                 </div>
               </div>
 
               <div class="summary-item">
                 <div class="info">
                   <h5>Total Pengeluaran</h5>
-                  <p id="strip-expense-text" style="color: #F87171;">- Rp 0</p>
+                  <p id="strip-expense-text" style="color: #F87171;">- formatRupiah(curMasuk)0</p>
                 </div>
               </div>
 
               <div class="summary-item">
                 <div class="info">
                   <h5>Selisih</h5>
-                  <p id="strip-diff-text" style="color: #34D399;">Rp 0</p>
+                  <p id="strip-diff-text" style="color: #34D399;">formatRupiah(curMasuk)0</p>
                 </div>
               </div>
             </div>
@@ -2292,6 +2567,65 @@
   </div>
 
   <!-- ==========================================================================
+       MODAL: DETAIL & AKSI TRANSAKSI
+       ========================================================================== -->
+  <div class="modal-backdrop" id="modal-tx-action">
+    <div class="glass-card modal-card" style="max-width: 380px;">
+      <div class="section-header" style="margin-bottom: 14px;">
+        <h3 id="tx-action-title">Detail Transaksi</h3>
+        <button class="btn btn-ghost" onclick="closeTxActionModal()">✕</button>
+      </div>
+      <div id="tx-action-details" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px; font-size: 13px;">
+        <!-- Dynamically filled -->
+      </div>
+      <div style="display: flex; gap: 8px;">
+        <button class="btn btn-primary" id="tx-action-edit-btn" style="flex: 1;">Edit Transaksi</button>
+        <button class="btn btn-danger" id="tx-action-del-btn" style="flex: 1;">Hapus</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL: PILIH PERIODE BULAN & TAHUN
+       ========================================================================== -->
+  <div class="modal-backdrop" id="modal-period">
+    <div class="glass-card modal-card" style="max-width: 380px;">
+      <div class="section-header" style="margin-bottom: 14px;">
+        <h3>Pilih Periode</h3>
+        <button class="btn btn-ghost" onclick="closePeriodModal()">✕</button>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 14px;">
+        <div style="display: flex; gap: 8px;">
+          <select id="modal-period-month-select" class="period-select" style="flex: 1;" onchange="onModalPeriodChange()">
+            <option value="1">Januari</option>
+            <option value="2">Februari</option>
+            <option value="3">Maret</option>
+            <option value="4">April</option>
+            <option value="5">Mei</option>
+            <option value="6">Juni</option>
+            <option value="7">Juli</option>
+            <option value="8">Agustus</option>
+            <option value="9">September</option>
+            <option value="10">Oktober</option>
+            <option value="11" selected>November</option>
+            <option value="12">Desember</option>
+          </select>
+          <select id="modal-period-year-select" class="period-select" style="flex: 1;" onchange="onModalPeriodChange()">
+            <option value="2025">2025</option>
+            <option value="2026" selected>2026</option>
+            <option value="2027">2027</option>
+          </select>
+        </div>
+        <div style="display: flex; gap: 8px; justify-content: space-between;">
+          <button type="button" class="btn btn-outline" style="flex: 1;" onclick="shiftPeriodMonth(-1)">‹ Bulan Lalu</button>
+          <button type="button" class="btn btn-primary" style="flex: 1;" onclick="setCurrentMonth()">Bulan Ini</button>
+          <button type="button" class="btn btn-outline" style="flex: 1;" onclick="shiftPeriodMonth(1)">Bulan Depan ›</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
        CLIENT-SIDE JAVASCRIPT & BACKEND CONNECTOR
        ========================================================================== -->
   <script>
@@ -2313,7 +2647,7 @@
     };
 
     // Filter Periode Aktif (Bulan: 1-12, Tahun: 2026)
-    let selectedMonth = 5; // Mei
+    let selectedMonth = 11; // November 2026 per screenshot
     let selectedYear = 2026;
     let activeTxFilterType = 'all';
 
@@ -2444,19 +2778,25 @@
         
         // Data transaksi contoh sesuai gambar referensi
         txs = [
-          { id: 't1', username: 'Fadhil', type: 'Pemasukan', amount: 15000000, category: 'Lainnya', date: '2026-05-01', notes: 'Gaji Bulanan' },
-          { id: 't2', username: 'Fadhil', type: 'Pengeluaran', amount: 650000, category: 'Makan', date: '2026-05-03', notes: 'Makan siang kantin' },
-          { id: 't3', username: 'Fadhil', type: 'Pengeluaran', amount: 430000, category: 'Transport', date: '2026-05-04', notes: 'Ongkos transport kampus' },
-          { id: 't4', username: 'Fadhil', type: 'Pengeluaran', amount: 350000, category: 'Belanja', date: '2026-05-05', notes: 'Belanja kebutuhan bulanan' },
-          { id: 't5', username: 'Fadhil', type: 'Pengeluaran', amount: 200000, category: 'Kopi', date: '2026-05-06', notes: 'Ngopi bersama teman' },
-          { id: 't6', username: 'Fadhil', type: 'Pengeluaran', amount: 300000, category: 'Kuliah', date: '2026-05-08', notes: 'Buku kuliah' },
-          { id: 't7', username: 'Fadhil', type: 'Pengeluaran', amount: 220000, category: 'Kebutuhan', date: '2026-05-10', notes: 'Alat tulis & perlengkapan' }
+          { id: 't1', username: 'Fadhil', type: 'Pemasukan', amount: 50000, category: 'Sangu', date: '2026-11-05', notes: '' },
+          { id: 't2', username: 'Fadhil', type: 'Pemasukan', amount: 30000, category: 'Gaji/Pemasukan', date: '2026-11-05', notes: 'Joki Yudis PIL' },
+          { id: 't3', username: 'Fadhil', type: 'Pengeluaran', amount: 65000, category: 'Makan Pribadi', date: '2026-11-04', notes: 'Ayam Rempah + Pentol' },
+          { id: 't4', username: 'Fadhil', type: 'Pemasukan', amount: 100000, category: 'Gaji/Pemasukan', date: '2026-11-04', notes: 'Sangu + Joki CMS Tyo' },
+          { id: 't5', username: 'Fadhil', type: 'Pemasukan', amount: 15000, category: 'Gaji/Pemasukan', date: '2026-11-03', notes: 'Joki PIL Ega' },
+          { id: 't6', username: 'Fadhil', type: 'Pemasukan', amount: 75000, category: 'Gaji/Pemasukan', date: '2026-11-03', notes: 'Dikasi Rama + David joki' },
+          { id: 't7', username: 'Fadhil', type: 'Pengeluaran', amount: 5000, category: 'Belanja Online', date: '2026-11-03', notes: 'Fanta' },
+          { id: 't8', username: 'Fadhil', type: 'Pemasukan', amount: 200000, category: 'Gaji/Pemasukan', date: '2026-11-02', notes: 'Freelance Web Project' },
+          { id: 't9', username: 'Fadhil', type: 'Pemasukan', amount: 186504, category: 'Gaji/Pemasukan', date: '2026-11-01', notes: 'Bonus Kinerja' },
+          { id: 't10', username: 'Fadhil', type: 'Pengeluaran', amount: 75000, category: 'Makan Pribadi', date: '2026-11-02', notes: 'Makan malam steak' },
+          { id: 't11', username: 'Fadhil', type: 'Pengeluaran', amount: 45000, category: 'Transport', date: '2026-11-02', notes: 'Bensin motor' },
+          { id: 't12', username: 'Fadhil', type: 'Pengeluaran', amount: 35000, category: 'Kopi', date: '2026-11-01', notes: 'Kopi susu gula aren' },
+          { id: 't13', username: 'Fadhil', type: 'Pengeluaran', amount: 158225, category: 'Kebutuhan', date: '2026-11-01', notes: 'Belanja bulanan minimarket' }
         ];
         localStorage.setItem('myspace_local_txs', JSON.stringify(txs));
 
         notes = [
           { id: 'n1', username: 'Fadhil', title: 'Rencana Bulan Ini', content: '✓ Batasi makan di luar\n✓ Sisihkan dana darurat\n□ Evaluasi pengeluaran', color: 'emerald', is_pinned: true },
-          { id: 'n2', username: 'Fadhil', title: 'Target Keuangan', content: '• Tabungan liburan: Rp 5.000.000\n• Target tercapai: 72%\n• Deadline: Agustus 2026', color: 'yellow', is_pinned: true },
+          { id: 'n2', username: 'Fadhil', title: 'Target Keuangan', content: '• Tabungan liburan: formatRupiah(curMasuk)5.000.000\n• Target tercapai: 72%\n• Deadline: Agustus 2026', color: 'yellow', is_pinned: true },
           { id: 'n3', username: 'Fadhil', title: 'Pengingat', content: '• Bayar biaya kuliah (15 Mei)\n• Beli kebutuhan bulanan', color: 'purple', is_pinned: false }
         ];
         localStorage.setItem('myspace_local_notes', JSON.stringify(notes));
@@ -2739,6 +3079,166 @@
       }
     }
 
+        let mobileTxFilter = 'all';
+    let currentActionTxId = null;
+
+    function setMobileTxFilter(type) {
+      mobileTxFilter = type;
+      document.getElementById('mob-filter-all')?.classList.toggle('active', type === 'all');
+      document.getElementById('mob-filter-income')?.classList.toggle('active', type === 'Pemasukan');
+      document.getElementById('mob-filter-expense')?.classList.toggle('active', type === 'Pengeluaran');
+      renderMobileKantongList();
+    }
+
+    function renderMobileKantongList() {
+      const monthTxs = getFilteredMonthTransactions();
+      const monthStr = MONTH_NAMES[selectedMonth] || 'Bulan';
+      
+      let curMasuk = 0;
+      let curKeluar = 0;
+      monthTxs.forEach(t => {
+        const amt = Number(t.amount) || 0;
+        if (t.type === 'Pemasukan') curMasuk += amt;
+        else if (t.type === 'Pengeluaran') curKeluar += amt;
+      });
+
+      // Update Pill Strip
+      const periodCountEl = document.getElementById('mob-kantong-period-count');
+      const masukEl = document.getElementById('mob-kantong-masuk');
+      const keluarEl = document.getElementById('mob-kantong-keluar');
+      
+      if (periodCountEl) periodCountEl.innerText = `${monthStr} ${selectedYear} • ${monthTxs.length} Transaksi`;
+      if (masukEl) masukEl.innerText = `formatRupiah(curMasuk)${formatRupiah(curMasuk)}`;
+      if (keluarEl) keluarEl.innerText = `formatRupiah(curMasuk)${formatRupiah(curKeluar)}`;
+
+      // Filter by type
+      let filtered = monthTxs;
+      if (mobileTxFilter !== 'all') {
+        filtered = filtered.filter(t => t.type === mobileTxFilter);
+      }
+
+      // Filter by search query
+      const q = (document.getElementById('mob-kantong-search')?.value || '').toLowerCase().trim();
+      if (q) {
+        filtered = filtered.filter(t =>
+          (t.notes || '').toLowerCase().includes(q) ||
+          (t.category || '').toLowerCase().includes(q) ||
+          (t.amount + '').includes(q)
+        );
+      }
+
+      // Sort newest first
+      filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+      const listContainer = document.getElementById('mob-kantong-tx-list');
+      if (!listContainer) return;
+
+      if (filtered.length === 0) {
+        listContainer.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 32px 14px; background: rgba(6, 44, 34, 0.4); border-radius: 18px; border: 1px dashed var(--border);">Tidak ada transaksi pada filter ini.</div>';
+        return;
+      }
+
+      listContainer.innerHTML = filtered.map(t => {
+        const isIncome = t.type === 'Pemasukan';
+        const prefix = isIncome ? '+' : '-';
+        const badgeClass = isIncome ? 'income' : 'expense';
+        const amountClass = isIncome ? 'income' : 'expense';
+        const title = escapeHtml(t.category || (isIncome ? 'Pemasukan' : 'Pengeluaran'));
+        const meta = t.date + (t.notes ? ' • ' + escapeHtml(t.notes) : '');
+        
+        const arrowSvg = isIncome
+          ? '<svg class="icon" viewBox="0 0 24 24"><line x1="12" x2="12" y1="19" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>'
+          : '<svg class="icon" viewBox="0 0 24 24"><line x1="12" x2="12" y1="5" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>';
+
+        return `
+          <div class="kantong-tx-card" onclick="openTxActionModal('${t.id}')">
+            <div class="kantong-tx-badge ${badgeClass}">
+              ${arrowSvg}
+            </div>
+            <div class="kantong-tx-info">
+              <div class="kantong-tx-title">${title}</div>
+              <div class="kantong-tx-meta">${meta}</div>
+            </div>
+            <div class="kantong-tx-end">
+              <div class="kantong-tx-amount ${amountClass}">${prefix} formatRupiah(curMasuk)${formatRupiah(t.amount)}</div>
+              <div class="kantong-tx-box" title="Aksi Transaksi">
+                <svg class="icon" viewBox="0 0 24 24" style="width: 12px; height: 12px;"><rect width="18" height="18" x="3" y="3" rx="2"></rect></svg>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function openTxActionModal(id) {
+      const t = state.transactions.find(x => x.id === id);
+      if (!t) return;
+      currentActionTxId = id;
+      const isIncome = t.type === 'Pemasukan';
+      const color = isIncome ? '#34D399' : '#F87171';
+      const prefix = isIncome ? '+' : '-';
+
+      const details = document.getElementById('tx-action-details');
+      if (details) {
+        details.innerHTML = `
+          <div style="background: rgba(6, 44, 34, 0.5); padding: 12px; border-radius: 12px; border: 1px solid var(--border);">
+            <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 2px;">Kategori & Tipe</div>
+            <div style="font-size: 15px; font-weight: 700; color: #fff;">${escapeHtml(t.category)} <span class="badge ${isIncome ? 'badge-success' : 'badge-danger'}" style="margin-left: 6px;">${t.type}</span></div>
+          </div>
+          <div style="background: rgba(6, 44, 34, 0.5); padding: 12px; border-radius: 12px; border: 1px solid var(--border);">
+            <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 2px;">Nominal</div>
+            <div style="font-size: 20px; font-weight: 800; color: ${color};">${prefix} formatRupiah(curMasuk)${formatRupiah(t.amount)}</div>
+          </div>
+          <div style="background: rgba(6, 44, 34, 0.5); padding: 12px; border-radius: 12px; border: 1px solid var(--border);">
+            <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 2px;">Tanggal</div>
+            <div style="font-size: 13px; font-weight: 600; color: #fff;">${t.date}</div>
+          </div>
+          <div style="background: rgba(6, 44, 34, 0.5); padding: 12px; border-radius: 12px; border: 1px solid var(--border);">
+            <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 2px;">Keterangan</div>
+            <div style="font-size: 13px; color: #fff;">${t.notes ? escapeHtml(t.notes) : '-'}</div>
+          </div>
+        `;
+      }
+
+      document.getElementById('tx-action-edit-btn').onclick = () => {
+        closeTxActionModal();
+        editTransactionModal(id);
+      };
+
+      document.getElementById('tx-action-del-btn').onclick = () => {
+        closeTxActionModal();
+        deleteTransaction(id);
+      };
+
+      document.getElementById('modal-tx-action').style.display = 'flex';
+    }
+
+    function closeTxActionModal() {
+      currentActionTxId = null;
+      const m = document.getElementById('modal-tx-action');
+      if (m) m.style.display = 'none';
+    }
+
+    function openPeriodModalLegacy() {
+      const mSel = document.getElementById('modal-period-month-select');
+      const ySel = document.getElementById('modal-period-year-select');
+      if (mSel) mSel.value = selectedMonth;
+      if (ySel) ySel.value = selectedYear;
+      const m = document.getElementById('modal-period');
+      if (m) m.style.display = 'flex';
+    }
+
+    function closePeriodModal() {
+      const m = document.getElementById('modal-period');
+      if (m) m.style.display = 'none';
+    }
+
+    function onModalPeriodChange() {
+      selectedMonth = parseInt(document.getElementById('modal-period-month-select').value);
+      selectedYear = parseInt(document.getElementById('modal-period-year-select').value);
+      updateAllUI();
+    }
+
     function updateAllUI() {
       renderPeriodDisplay();
       renderDashboardMetrics();
@@ -2746,6 +3246,7 @@
       renderCharts();
       renderCategoriesGrid();
       renderTransactionsList();
+      renderMobileKantongList();
       renderNotesBoard();
       renderTodosList();
     }
@@ -2864,7 +3365,7 @@
        ========================================================================== */
     function formatRupiah(num) {
       num = Number(num) || 0;
-      return 'Rp ' + num.toLocaleString('id-ID');
+      return 'formatRupiah(curMasuk)' + num.toLocaleString('id-ID');
     }
 
     function getFilteredMonthTransactions() {

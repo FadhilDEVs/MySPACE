@@ -399,4 +399,5 @@ Sumber: Gambar referensi desain UI/UX dan instruksi tema Emerald Green & White G
 | 1.1 | 05/11/2026 | UBAH: Menyimpan link exec Web App Apps Script resmi ke dalam index.html dan PRD.md | index.html, PRD.md |
 | 1.2 | 05/11/2026 | UBAH: Menu Kantong murni finansial (tanpa widget catatan/inline form transaksi), transaksi hanya via modal tombol (+). TAMBAH: Fitur Custom Kategori via tombol kecil & sheet categories | code.gs, setup.gs, index.html, PRD.md |
 | 1.3 | 05/11/2026 | UBAH: Penyempurnaan ergonomi UI mobile (mobile top header MySPACE, modal bottom-sheet, tactile keypad haptics, safe-area inset & kartu metrik 2x2 presisi) | index.html, PRD.md |
+| 1.4 | 05/11/2026 | UBAH: Visual dan tata letak fitur Kantong mobile disesuaikan 100% presisi sesuai gambar referensi (header pill avatar Fadhil, summary strip 1 baris, tab segmented Semua/Pemasukan/Pengeluaran, search pill, list kartu transaksi badge panah mint/coral, nominal presisi, kotak aksi, dan dock navigasi) | index.html, PRD.md |
 
