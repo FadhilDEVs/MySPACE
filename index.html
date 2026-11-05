@@ -2334,11 +2334,6 @@
             </div>
           </div>
         </div>
-        </div>
-
-        
-          <button class="btn btn-primary" onclick="installPwaApp()">Install</button>
-        </div>
 
         <!-- TOPBAR -->
         <header class="topbar">
@@ -2361,7 +2356,11 @@
               <div class="dot-badge"></div>
             </button>
 
-            <!-- User Avatar & Profile Link -->
+            <!-- Install Button & User Avatar -->
+            <button type="button" class="btn-install-header desktop-only" onclick="installPwaApp()" title="Install Aplikasi MySPACE">
+              <svg class="icon" style="width: 12px; height: 12px;" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>
+              <span>Install Aplikasi</span>
+            </button>
             <div class="avatar-btn" onclick="switchView('pengaturan')">
               <div class="avatar-circle" id="user-avatar-initial">F</div>
               <span class="avatar-name" id="user-display-name">Fadhil</span>
@@ -2758,8 +2757,8 @@
                 </div>
                 <span>Total Pemasukan</span>
               </div>
-              <div class="grafik-metric-val" id="grafik-metric-in">Rp 656.504</div>
-              <div class="grafik-metric-trend" style="color: #34D399;">&uarr; +7,9% dari Okt 2026</div>
+              <div class="grafik-metric-val" id="grafik-metric-in">Rp 0</div>
+              <div class="grafik-metric-trend" id="grafik-metric-in-trend" style="color: #34D399;">0% dari bulan lalu</div>
             </div>
 
             <!-- 2. Total Pengeluaran -->
@@ -2770,8 +2769,8 @@
                 </div>
                 <span>Total Pengeluaran</span>
               </div>
-              <div class="grafik-metric-val" id="grafik-metric-out">Rp 383.225</div>
-              <div class="grafik-metric-trend" style="color: #F87171;">&darr; -6,3% dari Okt 2026</div>
+              <div class="grafik-metric-val" id="grafik-metric-out">Rp 0</div>
+              <div class="grafik-metric-trend" id="grafik-metric-out-trend" style="color: #F87171;">0% dari bulan lalu</div>
             </div>
 
             <!-- 3. Selisih -->
@@ -2782,8 +2781,8 @@
                 </div>
                 <span>Selisih</span>
               </div>
-              <div class="grafik-metric-val" id="grafik-metric-diff">Rp 273.279</div>
-              <div class="grafik-metric-trend" style="color: #34D399;">&uarr; +34,2% dari Okt 2026</div>
+              <div class="grafik-metric-val" id="grafik-metric-diff">Rp 0</div>
+              <div class="grafik-metric-trend" id="grafik-metric-diff-trend" style="color: #34D399;">0% dari bulan lalu</div>
             </div>
           </div>
 
@@ -2837,7 +2836,7 @@
                 <canvas id="grafikDonutCanvas"></canvas>
                 <div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none;">
                   <span style="font-size: 10px; color: var(--text-muted);">Total</span>
-                  <span id="donut-center-total" style="font-size: 12px; font-weight: 800; color: #fff;">Rp 383.225</span>
+                  <span id="donut-center-total" style="font-size: 12px; font-weight: 800; color: #fff;">Rp 0</span>
                 </div>
               </div>
               <div style="flex: 1; min-width: 150px; display: flex; flex-direction: column; gap: 7px; font-size: 12px;" id="grafik-cat-breakdown-list">
@@ -3507,12 +3506,26 @@
       let curKeluar = 0;
       const catTotals = {};
 
+      // 5-week buckets for the current month
+      const weeklyIn = [0, 0, 0, 0, 0];
+      const weeklyOut = [0, 0, 0, 0, 0];
+
       monthTxs.forEach(t => {
         const amt = Number(t.amount) || 0;
+        const day = parseInt((t.date || '').split('-')[2] || '1', 10);
+        let wIdx = 0;
+        if (day <= 7) wIdx = 0;
+        else if (day <= 14) wIdx = 1;
+        else if (day <= 21) wIdx = 2;
+        else if (day <= 28) wIdx = 3;
+        else wIdx = 4;
+
         if (t.type === 'Pemasukan') {
           curMasuk += amt;
+          weeklyIn[wIdx] += amt;
         } else if (t.type === 'Pengeluaran') {
           curKeluar += amt;
+          weeklyOut[wIdx] += amt;
           const cat = t.category || 'Lainnya';
           catTotals[cat] = (catTotals[cat] || 0) + amt;
         }
@@ -3539,18 +3552,18 @@
       if (badgeW) badgeW.innerText = mStr + ' \u2193';
       if (badgeC) badgeC.innerText = mStr + ' \u2193';
 
-      // 1. Grouped Bar Chart: Pemasukan vs Pengeluaran per Minggu
+      // 1. Grouped Bar Chart: Pemasukan vs Pengeluaran per Minggu (Dynamic)
       const ctxWeekly = document.getElementById('grafikWeeklyBarCanvas')?.getContext('2d');
       if (ctxWeekly) {
         if (grafikWeeklyChartInst) grafikWeeklyChartInst.destroy();
         grafikWeeklyChartInst = new Chart(ctxWeekly, {
           type: 'bar',
           data: {
-            labels: ['Minggu 1\n(1-7 Nov)', 'Minggu 2\n(8-14 Nov)', 'Minggu 3\n(15-21 Nov)', 'Minggu 4\n(22-28 Nov)', 'Minggu 5\n(29-30 Nov)'],
+            labels: ['Minggu 1\n(1-7)', 'Minggu 2\n(8-14)', 'Minggu 3\n(15-21)', 'Minggu 4\n(22-28)', 'Minggu 5\n(29-31)'],
             datasets: [
               {
                 label: 'Pemasukan',
-                data: [110000, 145000, 220000, 130000, 51504],
+                data: weeklyIn,
                 backgroundColor: '#34D399',
                 borderRadius: 6,
                 barPercentage: 0.6,
@@ -3558,7 +3571,7 @@
               },
               {
                 label: 'Pengeluaran',
-                data: [65000, 80000, 120000, 85000, 33225],
+                data: weeklyOut,
                 backgroundColor: '#F87171',
                 borderRadius: 6,
                 barPercentage: 0.6,
@@ -3583,6 +3596,7 @@
                 grid: { display: false }
               },
               y: {
+                beginAtZero: true,
                 ticks: {
                   color: 'rgba(255, 255, 255, 0.6)',
                   font: { size: 10 },
@@ -3595,18 +3609,44 @@
         });
       }
 
-      // 2. Line Chart: Tren 6 Bulan Terakhir
+      // 2. Line Chart: Tren 6 Bulan Terakhir (Dynamic)
+      const trendLabels = [];
+      const trendIn = [];
+      const trendOut = [];
+      for (let i = 5; i >= 0; i--) {
+        let m = selectedMonth - i;
+        let y = selectedYear;
+        while (m <= 0) {
+          m += 12;
+          y -= 1;
+        }
+        const mPrefix = `${y}-${String(m).padStart(2, '0')}`;
+        trendLabels.push(`${(MONTH_NAMES[m] || '').slice(0, 3)} ${y}`);
+
+        let tIn = 0;
+        let tOut = 0;
+        (state.transactions || []).forEach(t => {
+          if (t.date && t.date.startsWith(mPrefix)) {
+            const amt = Number(t.amount) || 0;
+            if (t.type === 'Pemasukan') tIn += amt;
+            else if (t.type === 'Pengeluaran') tOut += amt;
+          }
+        });
+        trendIn.push(tIn);
+        trendOut.push(tOut);
+      }
+
       const ctxTrend = document.getElementById('grafikTrendLineCanvas')?.getContext('2d');
       if (ctxTrend) {
         if (grafikTrendChartInst) grafikTrendChartInst.destroy();
         grafikTrendChartInst = new Chart(ctxTrend, {
           type: 'line',
           data: {
-            labels: ['Jun 2026', 'Jul 2026', 'Agu 2026', 'Sep 2026', 'Okt 2026', 'Nov 2026'],
+            labels: trendLabels,
             datasets: [
               {
                 label: 'Pemasukan',
-                data: [500000, 520000, 480000, 590000, 610000, 656504],
+                data: trendIn,
                 borderColor: '#34D399',
                 backgroundColor: 'rgba(52, 211, 153, 0.12)',
                 tension: 0.35,
@@ -3616,7 +3656,7 @@
               },
               {
                 label: 'Pengeluaran',
-                data: [320000, 340000, 310000, 390000, 400000, 383225],
+                data: trendOut,
                 borderColor: '#F87171',
                 backgroundColor: 'rgba(248, 113, 113, 0.12)',
                 tension: 0.35,
@@ -3643,6 +3683,7 @@
                 grid: { display: false }
               },
               y: {
+                beginAtZero: true,
                 ticks: {
                   color: 'rgba(255, 255, 255, 0.6)',
                   font: { size: 10 },
@@ -3655,14 +3696,17 @@
         });
       }
 
-      // 3. Donut Chart: Komposisi Pengeluaran
+      // 3. Donut Chart: Komposisi Pengeluaran (Dynamic)
       const ctxDonut = document.getElementById('grafikDonutCanvas')?.getContext('2d');
       if (ctxDonut) {
         if (grafikDonutChartInst) grafikDonutChartInst.destroy();
         
-        const categories = Object.keys(catTotals).length > 0 ? Object.keys(catTotals) : ['Makan', 'Transport', 'Belanja', 'Kopi', 'Kuliah', 'Lainnya'];
-        const values = Object.keys(catTotals).length > 0 ? Object.values(catTotals) : [125000, 76000, 58000, 35000, 45000, 44225];
-        const colors = ['#34D399', '#2DD4BF', '#C084FC', '#FBBF24', '#60A5FA', '#94A3B8'];
+        const hasExpenses = curKeluar > 0 && Object.keys(catTotals).length > 0;
+        const categories = hasExpenses ? Object.keys(catTotals) : ['Belum ada data'];
+        const values = hasExpenses ? Object.values(catTotals) : [1];
+        const colors = hasExpenses 
+          ? ['#34D399', '#2DD4BF', '#C084FC', '#FBBF24', '#60A5FA', '#94A3B8', '#F87171', '#A78BFA']
+          : ['rgba(255, 255, 255, 0.12)'];
 
         grafikDonutChartInst = new Chart(ctxDonut, {
           type: 'doughnut',
@@ -3672,14 +3716,22 @@
               data: values,
               backgroundColor: colors.slice(0, categories.length),
               borderWidth: 0,
-              hoverOffset: 4
+              hoverOffset: hasExpenses ? 4 : 0
             }]
           },
           options: {
             responsive: true,
             maintainAspectRatio: false,
             cutout: '72%',
-            plugins: { legend: { display: false } }
+            plugins: { 
+              legend: { display: false },
+              tooltip: {
+                enabled: hasExpenses,
+                callbacks: {
+                  label: (ctx) => `${ctx.label}: ${formatRupiah(ctx.raw)}`
+                }
+              }
+            }
           }
         });
 
@@ -3688,20 +3740,23 @@
 
         const breakdownList = document.getElementById('grafik-cat-breakdown-list');
         if (breakdownList) {
-          const totalExpense = curKeluar || values.reduce((a, b) => a + b, 0);
-          breakdownList.innerHTML = categories.map((cat, i) => {
-            const val = values[i];
-            const pct = totalExpense > 0 ? ((val / totalExpense) * 100).toFixed(1) : '0';
-            return `
-              <div style="display: flex; align-items: center; justify-content: space-between;">
-                <span style="display: flex; align-items: center; gap: 7px; color: rgba(255, 255, 255, 0.85);">
-                  <span style="width: 8px; height: 8px; border-radius: 50%; background: ${colors[i % colors.length]};"></span>
-                  ${cat}
-                </span>
-                <span style="font-weight: 700; color: #fff;">${formatRupiah(val)} <span style="font-weight: 500; color: var(--text-muted); font-size: 11px;">(${pct}%)</span></span>
-              </div>
-            `;
-          }).join('');
+          if (!hasExpenses) {
+            breakdownList.innerHTML = '<div style="color: var(--text-muted); font-size: 11.5px; text-align: center; padding: 12px;">Belum ada pengeluaran di periode ini.</div>';
+          } else {
+            breakdownList.innerHTML = categories.map((cat, i) => {
+              const val = values[i];
+              const pct = ((val / curKeluar) * 100).toFixed(1);
+              return `
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                  <span style="display: flex; align-items: center; gap: 7px; color: rgba(255, 255, 255, 0.85);">
+                    <span style="width: 8px; height: 8px; border-radius: 50%; background: ${colors[i % colors.length]};"></span>
+                    ${escapeHtml(cat)}
+                  </span>
+                  <span style="font-weight: 700; color: #fff;">${formatRupiah(val)} <span style="font-weight: 500; color: var(--text-muted); font-size: 11px;">(${pct}%)</span></span>
+                </div>
+              `;
+            }).join('');
+          }
         }
       }
     }
@@ -3779,12 +3834,18 @@
 
       // Render Pinned Grid
       if (pinnedGrid) {
-        pinnedGrid.innerHTML = pinned.map(n => renderStickyNoteCard(n)).join('');
+        pinnedGrid.innerHTML = pinned.length > 0
+          ? pinned.map(n => renderStickyNoteCard(n)).join('')
+          : '<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 18px 12px; font-size: 12px; background: rgba(6, 44, 34, 0.35); border-radius: 14px; border: 1px dashed var(--border);">Belum ada catatan disematkan.</div>';
       }
 
       // Render All Grid
       if (allGrid) {
-        allGrid.innerHTML = (others.length > 0 ? others : notes).map(n => renderStickyNoteCard(n)).join('');
+        if (notes.length === 0) {
+          allGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 28px 14px; font-size: 12.5px; background: rgba(6, 44, 34, 0.35); border-radius: 14px; border: 1px dashed var(--border);">Belum ada catatan. Tekan tombol (+) di bawah untuk membuat catatan baru.</div>';
+        } else {
+          allGrid.innerHTML = (others.length > 0 ? others : notes).map(n => renderStickyNoteCard(n)).join('');
+        }
       }
     }
 
@@ -3960,11 +4021,15 @@
       document.getElementById('tugas-count-week').innerText = `${weekTasks.length} Tugas`;
 
       if (listToday) {
-        listToday.innerHTML = (todayTasks.length > 0 ? todayTasks : tasks.slice(0, 2)).map(t => renderTaskCard(t)).join('');
+        listToday.innerHTML = todayTasks.length > 0
+          ? todayTasks.map(t => renderTaskCard(t)).join('')
+          : '<div style="text-align: center; color: var(--text-muted); padding: 18px 12px; font-size: 12px; background: rgba(6, 44, 34, 0.35); border-radius: 14px; border: 1px dashed var(--border);">Tidak ada tugas untuk hari ini.</div>';
       }
 
       if (listWeek) {
-        listWeek.innerHTML = (weekTasks.length > 0 ? weekTasks : tasks.slice(2)).map(t => renderTaskCard(t)).join('');
+        listWeek.innerHTML = weekTasks.length > 0
+          ? weekTasks.map(t => renderTaskCard(t)).join('')
+          : '<div style="text-align: center; color: var(--text-muted); padding: 18px 12px; font-size: 12px; background: rgba(6, 44, 34, 0.35); border-radius: 14px; border: 1px dashed var(--border);">Tidak ada tugas untuk minggu ini.</div>';
       }
     }
 
@@ -4217,6 +4282,15 @@
       });
     }
 
+    // Bersihkan data bawaan lama dari peramban agar data awal selalu 0 murni
+    if (localStorage.getItem('myspace_clean_slate_v3') !== 'true') {
+      localStorage.setItem('myspace_local_txs', '[]');
+      localStorage.setItem('myspace_local_notes', '[]');
+      localStorage.setItem('myspace_local_todos', '[]');
+      localStorage.setItem('myspace_local_budgets', '[]');
+      localStorage.setItem('myspace_clean_slate_v3', 'true');
+    }
+
     /* MOCK LOCAL ENGINE (Offline & Zero-setup instant demo) */
     function mockLocalBackend(action, p) {
       let users = JSON.parse(localStorage.getItem('myspace_local_users') || '[]');
@@ -4226,52 +4300,17 @@
       let budgets = JSON.parse(localStorage.getItem('myspace_local_budgets') || '[]');
       let customCats = JSON.parse(localStorage.getItem('myspace_local_custom_cats') || '[]');
 
-      // Inisialisasi data contoh pada peluncuran pertama
+      // Inisialisasi default bersih tanpa data bawaan (semua mulai dari 0)
       if (users.length === 0) {
         users.push({ id: 'u1', username: 'Fadhil', password: '123' });
         localStorage.setItem('myspace_local_users', JSON.stringify(users));
-        
-        // Data transaksi contoh sesuai gambar referensi
-        txs = [
-          { id: 't1', username: 'Fadhil', type: 'Pemasukan', amount: 50000, category: 'Sangu', date: '2026-11-05', notes: '' },
-          { id: 't2', username: 'Fadhil', type: 'Pemasukan', amount: 30000, category: 'Gaji/Pemasukan', date: '2026-11-05', notes: 'Joki Yudis PIL' },
-          { id: 't3', username: 'Fadhil', type: 'Pengeluaran', amount: 65000, category: 'Makan Pribadi', date: '2026-11-04', notes: 'Ayam Rempah + Pentol' },
-          { id: 't4', username: 'Fadhil', type: 'Pemasukan', amount: 100000, category: 'Gaji/Pemasukan', date: '2026-11-04', notes: 'Sangu + Joki CMS Tyo' },
-          { id: 't5', username: 'Fadhil', type: 'Pemasukan', amount: 15000, category: 'Gaji/Pemasukan', date: '2026-11-03', notes: 'Joki PIL Ega' },
-          { id: 't6', username: 'Fadhil', type: 'Pemasukan', amount: 75000, category: 'Gaji/Pemasukan', date: '2026-11-03', notes: 'Dikasi Rama + David joki' },
-          { id: 't7', username: 'Fadhil', type: 'Pengeluaran', amount: 5000, category: 'Belanja Online', date: '2026-11-03', notes: 'Fanta' },
-          { id: 't8', username: 'Fadhil', type: 'Pemasukan', amount: 200000, category: 'Gaji/Pemasukan', date: '2026-11-02', notes: 'Freelance Web Project' },
-          { id: 't9', username: 'Fadhil', type: 'Pemasukan', amount: 186504, category: 'Gaji/Pemasukan', date: '2026-11-01', notes: 'Bonus Kinerja' },
-          { id: 't10', username: 'Fadhil', type: 'Pengeluaran', amount: 75000, category: 'Makan Pribadi', date: '2026-11-02', notes: 'Makan malam steak' },
-          { id: 't11', username: 'Fadhil', type: 'Pengeluaran', amount: 45000, category: 'Transport', date: '2026-11-02', notes: 'Bensin motor' },
-          { id: 't12', username: 'Fadhil', type: 'Pengeluaran', amount: 35000, category: 'Kopi', date: '2026-11-01', notes: 'Kopi susu gula aren' },
-          { id: 't13', username: 'Fadhil', type: 'Pengeluaran', amount: 158225, category: 'Kebutuhan', date: '2026-11-01', notes: 'Belanja bulanan minimarket' }
-        ];
+        txs = [];
+        notes = [];
+        todos = [];
+        budgets = [];
         localStorage.setItem('myspace_local_txs', JSON.stringify(txs));
-
-        notes = [
-          { id: 'n1', username: 'Fadhil', title: 'Rencana Bulanan', content: '☑ Evaluasi pengeluaran bulan lalu\n☐ Atur target tabungan\n☐ Rencana belanja bulanan', color: 'emerald', is_pinned: true, date: 'November 2026', tag: 'Rencana' },
-          { id: 'n2', username: 'Fadhil', title: 'Catatan Keuangan', content: '• Total pemasukan: Rp 656.504\n• Total pengeluaran: Rp 383.225\n• Sisa budget: Rp 273.279', color: 'yellow', is_pinned: true, date: 'Update: 13 Nov 2026', tag: 'Keuangan' },
-          { id: 'n3', username: 'Fadhil', title: 'Pengingat', content: '• Bayar biaya kuliah\n• Perpanjang paket data\n• Cek tagihan listrik', color: 'purple', is_pinned: false, date: '15 Mei 2026', tag: 'Pengingat' },
-          { id: 'n4', username: 'Fadhil', title: 'Ide', content: '• Buat konten tips hemat\n• Ide side project: aplikasi catatan\n• Riset peluang penghasilan tambahan', color: 'blue', is_pinned: false, date: 'Nov 2026', tag: 'Ide' },
-          { id: 'n5', username: 'Fadhil', title: 'Daftar Belanja', content: '☑ Beras 5 kg\n☑ Minyak goreng\n☐ Telur\n☐ Susu\n☐ Buah-buahan', color: 'pink', is_pinned: false, date: '11 Nov 2026', tag: 'Rencana' },
-          { id: 'n6', username: 'Fadhil', title: 'Catatan Keuangan', content: '• Pengeluaran makan: Rp 65.000\n• Transport: Rp 30.000\n• Lainnya: Rp 25.000\nTotal: Rp 120.000', color: 'emerald', is_pinned: false, date: '10 Nov 2026', tag: 'Keuangan' },
-          { id: 'n7', username: 'Fadhil', title: 'Rencana Mingguan', content: '• Jadwal kuliah\n• Olahraga pagi\n• Belajar coding', color: 'blue', is_pinned: false, date: '09 Nov 2026', tag: 'Rencana' },
-          { id: 'n8', username: 'Fadhil', title: 'Ide Pengembangan Diri', content: '• Baca buku 15 menit\n• Latihan public speaking', color: 'purple', is_pinned: false, date: '08 Nov 2026', tag: 'Ide' }
-        ];
         localStorage.setItem('myspace_local_notes', JSON.stringify(notes));
-
-        todos = [
-          { id: 'td1', username: 'Fadhil', task: 'Bayar UKT', description: 'Lakukan pembayaran UKT semester ini melalui portal kampus.', priority: 'Tinggi', is_completed: false, deadline: '2026-11-11', deadline_label: 'Hari ini, 11 Nov 2026', time: 'Sebelum 23.59', group: 'today' },
-          { id: 'td2', username: 'Fadhil', task: 'Revisi Tugas Kuliah', description: 'Perbaiki bagian analisis dan tambahkan referensi minimal 3 jurnal.', priority: 'Sedang', is_completed: true, deadline: '2026-11-11', deadline_label: 'Hari ini, 11 Nov 2026', time: 'Selesai', group: 'today' },
-          { id: 'td3', username: 'Fadhil', task: 'Belanja Bulanan', description: 'Beli kebutuhan bulanan (sabun, sampo, deterjen, dan kebutuhan dapur).', priority: 'Sedang', is_completed: false, deadline: '2026-11-13', deadline_label: 'Kam, 13 Nov 2026', time: 'Sebelum 20.00', group: 'week' },
-          { id: 'td4', username: 'Fadhil', task: 'Menabung', description: 'Setor tabungan bulanan Rp 500.000 ke kantong "Tabungan Liburan".', priority: 'Rendah', is_completed: false, deadline: '2026-11-16', deadline_label: 'Min, 16 Nov 2026', time: 'Sebelum 21.00', group: 'week' }
-        ];
         localStorage.setItem('myspace_local_todos', JSON.stringify(todos));
-
-        budgets = [
-          { id: 'b1', username: 'Fadhil', month_year: '2026-05', budget_amount: 3000000 }
-        ];
         localStorage.setItem('myspace_local_budgets', JSON.stringify(budgets));
       }
 
@@ -4989,69 +5028,7 @@
       }
     }
 
-    function renderStatistikPage() {
-      const curTxs = getFilteredMonthTransactions();
-      let masuk = 0;
-      let keluar = 0;
-      curTxs.forEach(t => {
-        if (t.type === 'Pemasukan') masuk += Number(t.amount) || 0;
-        else keluar += Number(t.amount) || 0;
-      });
 
-      const compCtx = document.getElementById('comparisonBarChart')?.getContext('2d');
-      if (compCtx) {
-        if (comparisonChartInstance) comparisonChartInstance.destroy();
-        comparisonChartInstance = new Chart(compCtx, {
-          type: 'bar',
-          data: {
-            labels: ['Pemasukan', 'Pengeluaran'],
-            datasets: [{
-              data: [masuk, keluar],
-              backgroundColor: ['#34D399', '#F87171'],
-              borderRadius: 10
-            }]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: { legend: { display: false } },
-            scales: {
-              x: { grid: { display: false }, ticks: { color: '#fff' } },
-              y: { grid: { color: 'rgba(52, 211, 153, 0.1)' }, ticks: { color: '#fff', callback: v => formatRupiah(v) } }
-            }
-          }
-        });
-      }
-
-      // Category breakdown table
-      const expenseTxs = curTxs.filter(t => t.type === 'Pengeluaran');
-      const catTotals = {};
-      const catCounts = {};
-      let totalEx = 0;
-      expenseTxs.forEach(t => {
-        const c = t.category || 'Lainnya';
-        const amt = Number(t.amount) || 0;
-        catTotals[c] = (catTotals[c] || 0) + amt;
-        catCounts[c] = (catCounts[c] || 0) + 1;
-        totalEx += amt;
-      });
-
-      const tbody = document.getElementById('stat-category-breakdown-tbody');
-      if (tbody) {
-        tbody.innerHTML = Object.keys(catTotals).map(c => {
-          const amt = catTotals[c];
-          const pct = totalEx > 0 ? ((amt / totalEx) * 100).toFixed(1) : '0';
-          return `
-            <tr>
-              <td><strong>${c}</strong></td>
-              <td>${catCounts[c] || 0} kali</td>
-              <td style="color: #F87171; font-weight: 700;">${formatRupiah(amt)}</td>
-              <td><span class="badge badge-success">${pct}%</span></td>
-            </tr>
-          `;
-        }).join('') || '<tr><td colspan="4" style="text-align: center; color: var(--text-muted);">Belum ada pengeluaran di periode ini.</td></tr>';
-      }
-    }
 
     /* ==========================================================================
        TRANSACTIONS CRUD & RENDERING
@@ -5570,87 +5547,7 @@
       `).join('');
     }
 
-    function renderNotesBoard() {
-      const grid = document.getElementById('full-notes-grid');
-      if (!grid) return;
 
-      const q = (document.getElementById('note-search-input')?.value || '').toLowerCase();
-      let notes = [...state.notes].sort((a, b) => (b.is_pinned ? 1 : 0) - (a.is_pinned ? 1 : 0));
-      if (q) {
-        notes = notes.filter(n => n.title.toLowerCase().includes(q) || n.content.toLowerCase().includes(q));
-      }
-
-      if (notes.length === 0) {
-        grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 30px;">Tidak ada catatan.</div>';
-        return;
-      }
-
-      grid.innerHTML = notes.map(n => `
-        <div class="sticky-card sticky-${n.color || 'emerald'}">
-          <div>
-            <div class="sticky-title">
-              <span>${n.title}</span>
-              <button onclick="togglePinNote('${n.id}')" style="background: none; border: none; cursor: pointer; color: ${n.is_pinned ? '#FBBF24' : 'var(--text-muted)'};">📌</button>
-            </div>
-            <div class="sticky-body">${n.content}</div>
-          </div>
-          <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 8px;">
-            <button class="btn btn-ghost" style="padding: 4px 8px; font-size: 12px;" onclick="openNoteModal('${n.id}')">Edit</button>
-            <button class="btn btn-ghost" style="padding: 4px 8px; font-size: 12px; color: #F87171;" onclick="deleteNote('${n.id}')">Hapus</button>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function openNoteModal(id = null) {
-      document.getElementById('note-edit-id').value = id || '';
-      if (id) {
-        const n = state.notes.find(x => x.id === id);
-        if (n) {
-          document.getElementById('note-modal-title').innerText = 'Edit Catatan';
-          document.getElementById('note-title-input').value = n.title;
-          document.getElementById('note-content-input').value = n.content;
-          document.getElementById('note-pinned-input').checked = Boolean(n.is_pinned);
-          const colorRadio = document.querySelector(`input[name="note-color"][value="${n.color || 'emerald'}"]`);
-          if (colorRadio) colorRadio.checked = true;
-        }
-      } else {
-        document.getElementById('note-modal-title').innerText = 'Catatan Baru';
-        document.getElementById('note-title-input').value = '';
-        document.getElementById('note-content-input').value = '';
-        document.getElementById('note-pinned-input').checked = false;
-      }
-      document.getElementById('modal-note').style.display = 'flex';
-    }
-
-    function closeNoteModal() {
-      document.getElementById('modal-note').style.display = 'none';
-    }
-
-    async function handleSaveNote(e) {
-      e.preventDefault();
-      const id = document.getElementById('note-edit-id').value || null;
-      const title = document.getElementById('note-title-input').value.trim();
-      const content = document.getElementById('note-content-input').value.trim();
-      const color = document.querySelector('input[name="note-color"]:checked')?.value || 'emerald';
-      const is_pinned = document.getElementById('note-pinned-input').checked;
-
-      try {
-        await api('saveNote', {
-          id,
-          username: currentUser.username,
-          title,
-          content,
-          color,
-          is_pinned
-        });
-        showToast('Catatan berhasil disimpan!');
-        closeNoteModal();
-        await loadUserData();
-      } catch (err) {
-        showToast(err.message || 'Gagal menyimpan catatan.');
-      }
-    }
 
     async function togglePinNote(id) {
       try {
@@ -5676,37 +5573,7 @@
     /* ==========================================================================
        TO-DO LIST (TUGAS)
        ========================================================================== */
-    function renderTodosList() {
-      const container = document.getElementById('todos-list-container');
-      if (!container) return;
 
-      if (state.todos.length === 0) {
-        container.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 24px;">Tidak ada tugas saat ini.</div>';
-        return;
-      }
-
-      container.innerHTML = state.todos.map(t => {
-        const isDone = Boolean(t.is_completed);
-        const priorityColor = t.priority === 'Tinggi' ? 'badge-danger' : (t.priority === 'Sedang' ? 'badge-warning' : 'badge-success');
-        return `
-          <div class="glass-card" style="padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; opacity: ${isDone ? '0.6' : '1'};">
-            <div style="display: flex; align-items: center; gap: 14px;">
-              <input type="checkbox" ${isDone ? 'checked' : ''} onchange="toggleTodoStatus('${t.id}', this.checked)" style="width: 18px; height: 18px; accent-color: #10B981; cursor: pointer;">
-              <div>
-                <h4 style="font-size: 14px; font-weight: 600; text-decoration: ${isDone ? 'line-through' : 'none'};">${t.task}</h4>
-                <div style="font-size: 11px; color: var(--text-muted); margin-top: 3px; display: flex; gap: 10px;">
-                  <span>${t.deadline ? 'Deadline: ' + t.deadline.replace('T', ' ') : 'Tanpa deadline'}</span>
-                </div>
-              </div>
-            </div>
-            <div style="display: flex; align-items: center; gap: 10px;">
-              <span class="badge ${priorityColor}">${t.priority || 'Sedang'}</span>
-              <button class="btn btn-ghost" style="padding: 4px 8px; color: #F87171;" onclick="deleteTodo('${t.id}')">✕</button>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
 
     async function handleQuickAddTodo(e) {
       e.preventDefault();
