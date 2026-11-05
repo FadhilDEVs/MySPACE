@@ -6,7 +6,7 @@ Versi: 1.0 | Tanggal: 05/11/2026 | Status: Draf
 - Tujuan: Mengelola keuangan, catatan, dan tugas harian pribadi secara mandiri, terstruktur, dan aman dengan penyimpanan permanen di Google Spreadsheet [USER]
 - Mode deploy: Mode B (GitHub Pages + Web App Apps Script) [ASUMSI-TEKNIS] (Repository telah terhubung dengan GitHub MySPACE untuk deployment static frontend via GitHub Pages yang terhubung ke Apps Script exec Web App via fetch JSON + CORS)
 - Folder keluaran: root folder proyek (`d:\02 - Hasil AI\01 - Website dan Aplikasi\MySPACE\MySPACE`) [USER]
-- Link exec Apps Script: `https://script.google.com/macros/s/AKfycbzCYve5XTcJtRUS-GgDr8LwqW66596NJWiC7HIft8n3R1CAV_gkceQQwqTgTnyZA7Zx/exec` [USER]
+- Link exec Apps Script: `https://script.google.com/macros/s/AKfycbxFN4AheX7p6tBXJDREbyzWGhivTcIVyFOwAMRxza67afOD19x8-imGJUOa2x3PU77AdA/exec` [USER]
 
 ## 2. Teks Literal (wajib dipakai persis)
 | Lokasi | Teks persis |
