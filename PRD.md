@@ -6,7 +6,7 @@ Versi: 1.0 | Tanggal: 05/11/2026 | Status: Draf
 - Tujuan: Mengelola keuangan, catatan, dan tugas harian pribadi secara mandiri, terstruktur, dan aman dengan penyimpanan permanen di Google Spreadsheet [USER]
 - Mode deploy: Mode B (GitHub Pages + Web App Apps Script) [ASUMSI-TEKNIS] (Repository telah terhubung dengan GitHub MySPACE untuk deployment static frontend via GitHub Pages yang terhubung ke Apps Script exec Web App via fetch JSON + CORS)
 - Folder keluaran: root folder proyek (`d:\02 - Hasil AI\01 - Website dan Aplikasi\MySPACE\MySPACE`) [USER]
-- Link exec Apps Script: `https://script.google.com/macros/s/AKfycbxFN4AheX7p6tBXJDREbyzWGhivTcIVyFOwAMRxza67afOD19x8-imGJUOa2x3PU77AdA/exec` [USER]
+- Link exec Apps Script: `https://script.google.com/macros/s/AKfycbzoZB5kJKe9FqCOgFK5Dh997NSX0GDbqCFzwhpBDg1wrgHAKJel50SdW5YmLG_u9WrVXQ/exec` [USER]
 
 ## 2. Teks Literal (wajib dipakai persis)
 | Lokasi | Teks persis |
@@ -401,4 +401,5 @@ Sumber: Gambar referensi desain UI/UX dan instruksi tema Emerald Green & White G
 | 1.3 | 05/11/2026 | UBAH: Penyempurnaan ergonomi UI mobile (mobile top header MySPACE, modal bottom-sheet, tactile keypad haptics, safe-area inset & kartu metrik 2x2 presisi) | index.html, PRD.md |
 | 1.4 | 05/11/2026 | UBAH: Visual dan tata letak fitur Kantong mobile disesuaikan 100% presisi sesuai gambar referensi (header pill avatar Fadhil, summary strip 1 baris, tab segmented Semua/Pemasukan/Pengeluaran, search pill, list kartu transaksi badge panah mint/coral, nominal presisi, kotak aksi, dan dock navigasi) | index.html, PRD.md |
 | 1.5 | 06/11/2026 | UBAH: Visual dan layout mobile untuk Page Grafik, Catatan, dan Tugas 100% presisi sesuai gambar referensi. TAMBAH: Tombol (+) dinamis kontekstual dengan modal bottom-sheet spesifik per halaman (Kantong: Transaksi, Grafik: Target/Anggaran, Catatan: Editor Catatan Baru, Tugas: Tambah Tugas Baru) | index.html, PRD.md |
+| 1.6 | 06/11/2026 | UBAH: Memperbarui link exec Web App Apps Script resmi ke versi terbaru | index.html, PRD.md |
 
