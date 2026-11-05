@@ -6,7 +6,7 @@ Versi: 1.0 | Tanggal: 05/11/2026 | Status: Draf
 - Tujuan: Mengelola keuangan, catatan, dan tugas harian pribadi secara mandiri, terstruktur, dan aman dengan penyimpanan permanen di Google Spreadsheet [USER]
 - Mode deploy: Mode B (GitHub Pages + Web App Apps Script) [ASUMSI-TEKNIS] (Repository telah terhubung dengan GitHub MySPACE untuk deployment static frontend via GitHub Pages yang terhubung ke Apps Script exec Web App via fetch JSON + CORS)
 - Folder keluaran: root folder proyek (`d:\02 - Hasil AI\01 - Website dan Aplikasi\MySPACE\MySPACE`) [USER]
-- Link exec Apps Script: `[BELUM-DITENTUKAN]` (Akan diisi setelah Web App dideploy oleh user pada tahap fdh-fullcode)
+- Link exec Apps Script: `https://script.google.com/macros/s/AKfycbzCYve5XTcJtRUS-GgDr8LwqW66596NJWiC7HIft8n3R1CAV_gkceQQwqTgTnyZA7Zx/exec` [USER]
 
 ## 2. Teks Literal (wajib dipakai persis)
 | Lokasi | Teks persis |
@@ -384,10 +384,11 @@ Sumber: Gambar referensi desain UI/UX dan instruksi tema Emerald Green & White G
 - Unggah file gambar/lampiran nota struk belanja ke Google Drive (tidak diminta).
 
 ## 13. Pertanyaan Terbuka
-- `[BELUM-DITENTUKAN]`: URL Exec Apps Script Web App (akan dimasukkan setelah deployment backend Apps Script oleh pengguna).
+- Tidak ada (Semua spesifikasi dan tautan exec Apps Script telah terhubung).
 
 ## 14. Riwayat Revisi
 | Versi | Tanggal | Perubahan (TAMBAH/UBAH/HAPUS) | File terdampak |
 |---|---|---|---|
 | 1.0 | 05/11/2026 | Dokumen awal spesifikasi webapp MySPACE berdasarkan instruksi user dan 5 gambar referensi | code.gs, setup.gs, index.html |
+| 1.1 | 05/11/2026 | UBAH: Menyimpan link exec Web App Apps Script resmi ke dalam index.html dan PRD.md | index.html, PRD.md |
 
