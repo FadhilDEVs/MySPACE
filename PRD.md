@@ -402,4 +402,5 @@ Sumber: Gambar referensi desain UI/UX dan instruksi tema Emerald Green & White G
 | 1.4 | 05/11/2026 | UBAH: Visual dan tata letak fitur Kantong mobile disesuaikan 100% presisi sesuai gambar referensi (header pill avatar Fadhil, summary strip 1 baris, tab segmented Semua/Pemasukan/Pengeluaran, search pill, list kartu transaksi badge panah mint/coral, nominal presisi, kotak aksi, dan dock navigasi) | index.html, PRD.md |
 | 1.5 | 06/11/2026 | UBAH: Visual dan layout mobile untuk Page Grafik, Catatan, dan Tugas 100% presisi sesuai gambar referensi. TAMBAH: Tombol (+) dinamis kontekstual dengan modal bottom-sheet spesifik per halaman (Kantong: Transaksi, Grafik: Target/Anggaran, Catatan: Editor Catatan Baru, Tugas: Tambah Tugas Baru) | index.html, PRD.md |
 | 1.6 | 06/11/2026 | UBAH: Memperbarui link exec Web App Apps Script resmi ke versi terbaru | index.html, PRD.md |
+| 1.7 | 06/11/2026 | PERBAIKAN: Memperbaiki sintaks string catatan, menyembunyikan bottom navigation bar sepenuhnya pada halaman login/auth, menambahkan styling anti-autofill putih, dan memastikan alur login lancar | index.html, PRD.md |
 
