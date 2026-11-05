@@ -55,6 +55,13 @@ function getDbSchema_() {
       { name: 'month_year', type: 'text' },
       { name: 'budget_amount', type: 'currency' },
       { name: 'updated_at', type: 'datetime' }
+    ],
+    'categories': [
+      { name: 'id', type: 'id' },
+      { name: 'username', type: 'text' },
+      { name: 'name', type: 'text' },
+      { name: 'icon', type: 'text' },
+      { name: 'created_at', type: 'datetime' }
     ]
   };
 }

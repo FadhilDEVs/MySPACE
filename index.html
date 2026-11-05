@@ -701,6 +701,47 @@
       color: #fff;
       border-color: var(--primary);
     }
+    .btn-cat-custom-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(52, 211, 153, 0.35);
+      color: #34D399;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-cat-custom-trigger:hover {
+      background: rgba(16, 185, 129, 0.25);
+      border-color: var(--primary);
+      color: #fff;
+    }
+    .icon-selector-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 6px;
+    }
+    .icon-choice-btn {
+      background: rgba(6, 44, 34, 0.6);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: all 0.2s ease;
+    }
+    .icon-choice-btn:hover, .icon-choice-btn.active {
+      background: rgba(16, 185, 129, 0.25);
+      border-color: #34D399;
+      color: #fff;
+    }
     .categories-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -1456,169 +1497,71 @@
             </div>
           </div>
 
-          <!-- DASHBOARD MULTI-COLUMN -->
-          <div class="dashboard-grid">
+          <!-- FINANCIAL-ONLY KANTONG (KEUANGAN) DASHBOARD -->
+          <div style="display: flex; flex-direction: column; gap: 24px;">
             
-            <!-- LEFT COLUMN: QUICK TRANSACTION WIDGET -->
-            <div class="glass-card widget-catat">
-              <div class="widget-title">
-                <h3>Catat Transaksi</h3>
-                <p>Buat catatan transaksi keuanganmu.</p>
-              </div>
-
-              <!-- Type Tabs -->
-              <div class="type-switcher">
-                <div class="type-tab active" id="tab-pengeluaran" onclick="setTxType('Pengeluaran')">
-                  <svg class="icon" style="width: 16px; height: 16px;" viewBox="0 0 24 24"><line x1="7" x2="17" y1="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-                  <span>Pengeluaran</span>
+            <!-- Charts: Weekly Breakdown & Category Composition -->
+            <div class="charts-row">
+              <div class="glass-card chart-card">
+                <div class="section-header">
+                  <h3>Statistik Pengeluaran</h3>
+                  <span class="badge badge-success">Bulan ini</span>
                 </div>
-                <div class="type-tab" id="tab-pemasukan" onclick="setTxType('Pemasukan')">
-                  <svg class="icon" style="width: 16px; height: 16px;" viewBox="0 0 24 24"><line x1="17" x2="7" y1="7" y2="17"></line><polyline points="17 17 7 17 7 7"></polyline></svg>
-                  <span>Pemasukan</span>
+                <div class="chart-container">
+                  <canvas id="weeklyBarChart"></canvas>
                 </div>
               </div>
 
-              <!-- Nominal Display -->
-              <div>
-                <label style="font-size: 12px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 6px;">Nominal</label>
-                <div class="nominal-display-box">
-                  <span class="label">Rp</span>
-                  <span class="value" id="quick-nominal-val">0</span>
+              <div class="glass-card chart-card">
+                <div class="section-header">
+                  <h3>Komposisi Pengeluaran</h3>
+                  <span id="dash-donut-total" style="font-size: 12px; font-weight: 700; color: #34D399;">Rp 0 Total</span>
+                </div>
+                <div class="chart-container">
+                  <canvas id="categoryDonutChart"></canvas>
                 </div>
               </div>
-
-              <!-- Quick Chips -->
-              <div class="quick-chips">
-                <div class="chip" onclick="addQuickNominal(10000)">10 rb</div>
-                <div class="chip" onclick="addQuickNominal(25000)">25 rb</div>
-                <div class="chip" onclick="addQuickNominal(50000)">50 rb</div>
-                <div class="chip" onclick="addQuickNominal(100000)">100 rb</div>
-                <div class="chip" onclick="addQuickNominal(200000)">200 rb</div>
-                <div class="chip" onclick="addQuickNominal(500000)">500 rb</div>
-              </div>
-
-              <!-- Kategori Grid -->
-              <div>
-                <label style="font-size: 12px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 6px;">Kategori</label>
-                <div class="categories-grid" id="quick-cat-grid">
-                  <div class="cat-btn active" onclick="selectQuickCategory('Makan', this)">
-                    <svg class="icon" viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path></svg>
-                    <span>Makan</span>
-                  </div>
-                  <div class="cat-btn" onclick="selectQuickCategory('Transport', this)">
-                    <svg class="icon" viewBox="0 0 24 24"><rect width="16" height="16" x="4" y="3" rx="2"></rect><circle cx="8" cy="19" r="2"></circle><circle cx="16" cy="19" r="2"></circle></svg>
-                    <span>Transport</span>
-                  </div>
-                  <div class="cat-btn" onclick="selectQuickCategory('Belanja', this)">
-                    <svg class="icon" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><line x1="3" x2="21" y1="6" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-                    <span>Belanja</span>
-                  </div>
-                  <div class="cat-btn" onclick="selectQuickCategory('Kopi', this)">
-                    <svg class="icon" viewBox="0 0 24 24"><path d="M17 8h1a4 4 0 1 1 0 8h-1"></path><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"></path><line x1="6" x2="6" y1="2" y2="4"></line><line x1="10" x2="10" y1="2" y2="4"></line><line x1="14" x2="14" y1="2" y2="4"></line></svg>
-                    <span>Kopi</span>
-                  </div>
-                  <div class="cat-btn" onclick="selectQuickCategory('Kuliah', this)">
-                    <svg class="icon" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
-                    <span>Kuliah</span>
-                  </div>
-                  <div class="cat-btn" onclick="selectQuickCategory('Kebutuhan', this)">
-                    <svg class="icon" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>
-                    <span>Kebutuhan</span>
-                  </div>
-                  <div class="cat-btn" onclick="selectQuickCategory('Lainnya', this)">
-                    <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
-                    <span>Lainnya</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Tanggal & Keterangan -->
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                <div>
-                  <label style="font-size: 12px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 6px;">Tanggal</label>
-                  <input type="date" id="quick-tx-date" class="glass-input" style="padding: 10px;">
-                </div>
-                <div>
-                  <label style="font-size: 12px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 6px;">Keterangan (Opsional)</label>
-                  <input type="text" id="quick-tx-notes" class="glass-input" placeholder="Catatan singkat..." style="padding: 10px;">
-                </div>
-              </div>
-
-              <!-- Submit Button -->
-              <button class="btn btn-primary" onclick="submitQuickTransaction()" style="width: 100%; margin-top: 6px;">
-                <svg class="icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                <span id="quick-btn-label">Simpan Transaksi</span>
-              </button>
             </div>
 
-            <!-- RIGHT COLUMN: NOTES + CHARTS + RECENT TRANSACTIONS -->
-            <div class="dashboard-right-col">
-              
-              <!-- Sticky Notes Mini Board -->
-              <div class="glass-card notes-widget">
-                <div class="section-header">
-                  <div>
-                    <h3>Catatan</h3>
-                    <p style="font-size: 12px; color: var(--text-muted);">Tulis ide, rencana, atau pengingat keuanganmu.</p>
-                  </div>
-                  <button class="btn btn-outline" style="padding: 6px 14px; font-size: 12px;" onclick="openNoteModal()">
-                    + Catatan Baru
-                  </button>
-                </div>
-                <div class="sticky-grid" id="dash-sticky-container">
-                  <!-- Rendered dynamically -->
-                </div>
-              </div>
-
-              <!-- Charts: Weekly Breakdown & Category Composition -->
-              <div class="charts-row">
-                <div class="glass-card chart-card">
-                  <div class="section-header">
-                    <h3>Statistik Pengeluaran</h3>
-                    <span class="badge badge-success">Bulan ini</span>
-                  </div>
-                  <div class="chart-container">
-                    <canvas id="weeklyBarChart"></canvas>
-                  </div>
-                </div>
-
-                <div class="glass-card chart-card">
-                  <div class="section-header">
-                    <h3>Komposisi Pengeluaran</h3>
-                    <span id="dash-donut-total" style="font-size: 12px; font-weight: 700; color: #34D399;">Rp 0 Total</span>
-                  </div>
-                  <div class="chart-container">
-                    <canvas id="categoryDonutChart"></canvas>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Recent Transactions Table -->
-              <div class="glass-card transactions-card">
-                <div class="section-header">
+            <!-- Recent Transactions Table Card -->
+            <div class="glass-card transactions-card">
+              <div class="section-header">
+                <div>
                   <h3>Transaksi Terbaru</h3>
+                  <p style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">Mutasi transaksi pemasukan dan pengeluaran terakhir.</p>
+                </div>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                  <button class="btn btn-primary desktop-only" style="padding: 7px 16px; font-size: 12px;" onclick="openTxModal()">
+                    + Tambah Transaksi
+                  </button>
                   <a onclick="switchView('transaksi')" style="font-size: 13px; color: #34D399; font-weight: 600; cursor: pointer; text-decoration: none;">
                     Lihat Semua &rarr;
                   </a>
                 </div>
-                <div class="tx-table-wrapper" style="overflow-x: auto;">
-                  <table class="tx-table">
-                    <thead>
-                      <tr>
-                        <th>Tanggal</th>
-                        <th>Kategori</th>
-                        <th>Keterangan</th>
-                        <th>Tipe</th>
-                        <th style="text-align: right;">Nominal</th>
-                      </tr>
-                    </thead>
-                    <tbody id="dash-recent-tx-tbody">
-                      <!-- Rendered dynamically -->
-                    </tbody>
-                  </table>
-                </div>
+              </div>
+              
+              <!-- Desktop Table View -->
+              <div class="tx-table-wrapper" style="overflow-x: auto;">
+                <table class="tx-table">
+                  <thead>
+                    <tr>
+                      <th>Tanggal</th>
+                      <th>Kategori</th>
+                      <th>Keterangan</th>
+                      <th>Tipe</th>
+                      <th style="text-align: right;">Nominal</th>
+                    </tr>
+                  </thead>
+                  <tbody id="dash-recent-tx-tbody">
+                    <!-- Rendered dynamically -->
+                  </tbody>
+                </table>
               </div>
 
+              <!-- Mobile Card List View -->
+              <div class="mobile-tx-list" id="dash-recent-tx-moblist" style="margin-top: 10px;">
+                <!-- Rendered dynamically -->
+              </div>
             </div>
 
           </div>
@@ -2040,38 +1983,17 @@
         <div class="chip" onclick="addModalNominal(500000)">500 rb</div>
       </div>
 
-      <!-- Categories -->
+      <!-- Categories with subtle Custom Category button -->
       <div>
-        <label style="font-size: 12px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 6px;">Kategori</label>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+          <label style="font-size: 12px; font-weight: 600; color: var(--text-muted);">Kategori</label>
+          <button type="button" class="btn-cat-custom-trigger" onclick="openCategoryModal()" title="Tambah & kelola kategori sendiri">
+            <svg class="icon" style="width: 12px; height: 12px;" viewBox="0 0 24 24"><line x1="12" x2="12" y1="5" y2="19"></line><line x1="5" x2="19" y1="12" y2="12"></line></svg>
+            <span>+ Kategori</span>
+          </button>
+        </div>
         <div class="categories-grid" id="modal-cat-grid">
-          <div class="cat-btn active" onclick="selectModalCategory('Makan', this)">
-            <svg class="icon" viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path></svg>
-            <span>Makan</span>
-          </div>
-          <div class="cat-btn" onclick="selectModalCategory('Transport', this)">
-            <svg class="icon" viewBox="0 0 24 24"><rect width="16" height="16" x="4" y="3" rx="2"></rect><circle cx="8" cy="19" r="2"></circle><circle cx="16" cy="19" r="2"></circle></svg>
-            <span>Transport</span>
-          </div>
-          <div class="cat-btn" onclick="selectModalCategory('Belanja', this)">
-            <svg class="icon" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path></svg>
-            <span>Belanja</span>
-          </div>
-          <div class="cat-btn" onclick="selectModalCategory('Kopi', this)">
-            <svg class="icon" viewBox="0 0 24 24"><path d="M17 8h1a4 4 0 1 1 0 8h-1"></path><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"></path></svg>
-            <span>Kopi</span>
-          </div>
-          <div class="cat-btn" onclick="selectModalCategory('Kuliah', this)">
-            <svg class="icon" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path></svg>
-            <span>Kuliah</span>
-          </div>
-          <div class="cat-btn" onclick="selectModalCategory('Kebutuhan', this)">
-            <svg class="icon" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>
-            <span>Kebutuhan</span>
-          </div>
-          <div class="cat-btn" onclick="selectModalCategory('Lainnya', this)">
-            <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
-            <span>Lainnya</span>
-          </div>
+          <!-- Rendered dynamically -->
         </div>
       </div>
 
@@ -2101,6 +2023,46 @@
         <div class="key-btn" onclick="pressKeypad('000')">000</div>
         <div class="key-btn" onclick="pressKeypad('0')">0</div>
         <div class="key-btn" onclick="pressKeypad('backspace')">⌫</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL: KELOLA KATEGORI KUSTOM
+       ========================================================================== -->
+  <div class="modal-backdrop" id="modal-category">
+    <div class="glass-card modal-card" style="max-width: 420px;">
+      <div class="section-header">
+        <div>
+          <h3>Kategori Kustom</h3>
+          <p style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">Tambah kategori baru sesuai kebutuhanmu.</p>
+        </div>
+        <button class="btn btn-ghost" onclick="closeCategoryModal()">✕</button>
+      </div>
+
+      <form onsubmit="handleSaveCustomCategory(event)" style="margin-top: 14px;">
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <div>
+            <label style="font-size: 12px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 4px;">Nama Kategori</label>
+            <input type="text" id="custom-cat-name-input" class="glass-input" placeholder="Misal: Investasi, Zakat, Hobi..." required>
+          </div>
+          <div>
+            <label style="font-size: 12px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 6px;">Pilih Ikon</label>
+            <div class="icon-selector-grid" id="custom-cat-icon-choices">
+              <!-- Choices of icons populated in JS -->
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 6px;">
+            + Tambah Kategori
+          </button>
+        </div>
+      </form>
+
+      <div style="margin-top: 18px; border-top: 1px solid var(--border); padding-top: 14px;">
+        <h4 style="font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 8px;">Daftar Kategori Kustom Anda</h4>
+        <div id="custom-cat-chips-list" style="display: flex; flex-wrap: wrap; gap: 8px;">
+          <!-- Dynamically populated -->
+        </div>
       </div>
     </div>
   </div>
@@ -2206,7 +2168,8 @@
       transactions: [],
       notes: [],
       todos: [],
-      budgets: []
+      budgets: [],
+      customCategories: []
     };
 
     // Filter Periode Aktif (Bulan: 1-12, Tahun: 2026)
@@ -2332,6 +2295,7 @@
       let notes = JSON.parse(localStorage.getItem('myspace_local_notes') || '[]');
       let todos = JSON.parse(localStorage.getItem('myspace_local_todos') || '[]');
       let budgets = JSON.parse(localStorage.getItem('myspace_local_budgets') || '[]');
+      let customCats = JSON.parse(localStorage.getItem('myspace_local_custom_cats') || '[]');
 
       // Inisialisasi data contoh pada peluncuran pertama
       if (users.length === 0) {
@@ -2393,8 +2357,20 @@
             transactions: txs.filter(x => String(x.username).toLowerCase() === uname),
             notes: notes.filter(x => String(x.username).toLowerCase() === uname),
             todos: todos.filter(x => String(x.username).toLowerCase() === uname),
-            budgets: budgets.filter(x => String(x.username).toLowerCase() === uname)
+            budgets: budgets.filter(x => String(x.username).toLowerCase() === uname),
+            customCategories: customCats.filter(x => String(x.username).toLowerCase() === uname)
           };
+        }
+        case 'saveCustomCategory': {
+          const newCat = { id: 'cat_' + Date.now(), username: p.username, name: p.name, icon: p.icon || 'tag' };
+          customCats.push(newCat);
+          localStorage.setItem('myspace_local_custom_cats', JSON.stringify(customCats));
+          return newCat;
+        }
+        case 'deleteCustomCategory': {
+          customCats = customCats.filter(x => x.id !== p.id);
+          localStorage.setItem('myspace_local_custom_cats', JSON.stringify(customCats));
+          return { id: p.id };
         }
         case 'saveTransaction': {
           if (p.id) {
@@ -2613,6 +2589,7 @@
         state.notes = res.notes || [];
         state.todos = res.todos || [];
         state.budgets = res.budgets || [];
+        state.customCategories = res.customCategories || [];
         updateAllUI();
       } catch (err) {
         showToast('Gagal memuat data: ' + err.message);
@@ -2622,9 +2599,9 @@
     function updateAllUI() {
       renderPeriodDisplay();
       renderDashboardMetrics();
-      renderDashboardStickyNotes();
       renderRecentTransactions();
       renderCharts();
+      renderCategoriesGrid();
       renderTransactionsList();
       renderNotesBoard();
       renderTodosList();
@@ -2840,7 +2817,7 @@
 
       // Category Donut Chart
       const catTotals = {};
-      const CATEGORIES = ['Makan', 'Transport', 'Belanja', 'Kopi', 'Kuliah', 'Kebutuhan', 'Lainnya'];
+      const CATEGORIES = getAllCategoryNames();
       CATEGORIES.forEach(c => catTotals[c] = 0);
       let totalExpense = 0;
       expenseTxs.forEach(t => {
@@ -2855,15 +2832,17 @@
       const donutCtx = document.getElementById('categoryDonutChart')?.getContext('2d');
       if (donutCtx) {
         if (donutChartInstance) donutChartInstance.destroy();
+        const palette = [
+          '#10B981', '#34D399', '#6EE7B7', '#059669', '#047857', '#FBBF24', '#A78BFA',
+          '#38BDF8', '#F472B6', '#FB923C', '#2DD4BF', '#818CF8'
+        ];
         donutChartInstance = new Chart(donutCtx, {
           type: 'doughnut',
           data: {
             labels: CATEGORIES,
             datasets: [{
               data: CATEGORIES.map(c => catTotals[c] || 0),
-              backgroundColor: [
-                '#10B981', '#34D399', '#6EE7B7', '#059669', '#047857', '#FBBF24', '#A78BFA'
-              ],
+              backgroundColor: CATEGORIES.map((c, i) => palette[i % palette.length]),
               borderWidth: 2,
               borderColor: '#062c22'
             }]
@@ -2998,28 +2977,206 @@
 
     function renderRecentTransactions() {
       const tbody = document.getElementById('dash-recent-tx-tbody');
-      if (!tbody) return;
+      const mobList = document.getElementById('dash-recent-tx-moblist');
 
       const sorted = [...state.transactions].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 5);
-      if (sorted.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 20px;">Belum ada transaksi.</td></tr>';
-        return;
+
+      if (tbody) {
+        if (sorted.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 20px;">Belum ada transaksi.</td></tr>';
+        } else {
+          tbody.innerHTML = sorted.map(t => {
+            const isIncome = t.type === 'Pemasukan';
+            const color = isIncome ? '#34D399' : '#F87171';
+            const prefix = isIncome ? '+' : '-';
+            return `
+              <tr>
+                <td>${t.date}</td>
+                <td><span class="badge ${isIncome ? 'badge-success' : 'badge-danger'}">${t.category}</span></td>
+                <td>${t.notes || '-'}</td>
+                <td>${t.type}</td>
+                <td style="text-align: right; font-weight: 700; color: ${color};">${prefix} ${formatRupiah(t.amount)}</td>
+              </tr>
+            `;
+          }).join('');
+        }
       }
 
-      tbody.innerHTML = sorted.map(t => {
-        const isIncome = t.type === 'Pemasukan';
-        const color = isIncome ? '#34D399' : '#F87171';
-        const prefix = isIncome ? '+' : '-';
+      if (mobList) {
+        if (sorted.length === 0) {
+          mobList.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 18px;">Belum ada transaksi.</div>';
+        } else {
+          mobList.innerHTML = sorted.map(t => {
+            const isIncome = t.type === 'Pemasukan';
+            const color = isIncome ? '#34D399' : '#F87171';
+            const prefix = isIncome ? '+' : '-';
+            return `
+              <div class="tx-item-card">
+                <div class="tx-item-left">
+                  <div class="tx-cat-icon" style="background: ${isIncome ? 'rgba(52, 211, 153, 0.2)' : 'rgba(248, 113, 113, 0.2)'}; color: ${color};">
+                    <svg class="icon" viewBox="0 0 24 24"><line x1="${isIncome ? '17' : '7'}" x2="${isIncome ? '7' : '17'}" y1="${isIncome ? '7' : '17'}" y2="${isIncome ? '17' : '7'}"></line></svg>
+                  </div>
+                  <div class="tx-item-details">
+                    <h4>${t.notes || t.category}</h4>
+                    <p>${t.date} • ${t.category}</p>
+                  </div>
+                </div>
+                <div class="tx-item-right">
+                  <div class="tx-item-amount" style="color: ${color};">${prefix} ${formatRupiah(t.amount)}</div>
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
+      }
+    }
+
+    /* ==========================================================================
+       CUSTOM CATEGORIES ENGINE
+       ========================================================================== */
+    const DEFAULT_CATEGORIES = [
+      { name: 'Makan', icon: 'makan' },
+      { name: 'Transport', icon: 'transport' },
+      { name: 'Belanja', icon: 'belanja' },
+      { name: 'Kopi', icon: 'kopi' },
+      { name: 'Kuliah', icon: 'kuliah' },
+      { name: 'Kebutuhan', icon: 'kebutuhan' },
+      { name: 'Lainnya', icon: 'lainnya' }
+    ];
+
+    let selectedCustomCatIcon = 'tag';
+
+    function getAllCategoryNames() {
+      const names = DEFAULT_CATEGORIES.map(c => c.name);
+      if (state.customCategories) {
+        state.customCategories.forEach(c => {
+          if (!names.includes(c.name)) names.push(c.name);
+        });
+      }
+      return names;
+    }
+
+    function renderCategoriesGrid() {
+      const grid = document.getElementById('modal-cat-grid');
+      if (!grid) return;
+
+      const customList = state.customCategories || [];
+      const all = [
+        ...DEFAULT_CATEGORIES,
+        ...customList.map(c => ({ name: c.name, icon: c.icon || 'tag', isCustom: true, id: c.id }))
+      ];
+
+      grid.innerHTML = all.map(c => {
+        const isActive = modalTxCategory === c.name;
         return `
-          <tr>
-            <td>${t.date}</td>
-            <td><span class="badge ${isIncome ? 'badge-success' : 'badge-danger'}">${t.category}</span></td>
-            <td>${t.notes || '-'}</td>
-            <td>${t.type}</td>
-            <td style="text-align: right; font-weight: 700; color: ${color};">${prefix} ${formatRupiah(t.amount)}</td>
-          </tr>
+          <div class="cat-btn ${isActive ? 'active' : ''}" onclick="selectModalCategory('${c.name}', this)">
+            <svg class="icon" viewBox="0 0 24 24">${getCategorySvgPath(c.icon || c.name)}</svg>
+            <span>${c.name}</span>
+          </div>
         `;
       }).join('');
+    }
+
+    function selectModalCategory(cat, el) {
+      modalTxCategory = cat;
+      document.querySelectorAll('#modal-cat-grid .cat-btn').forEach(b => b.classList.remove('active'));
+      if (el) el.classList.add('active');
+    }
+
+    function openCategoryModal() {
+      selectedCustomCatIcon = 'tag';
+      renderIconChoices();
+      renderCustomCategoryChips();
+      document.getElementById('modal-category').style.display = 'flex';
+    }
+
+    function closeCategoryModal() {
+      document.getElementById('modal-category').style.display = 'none';
+    }
+
+    function renderIconChoices() {
+      const container = document.getElementById('custom-cat-icon-choices');
+      if (!container) return;
+      const icons = ['tag', 'dollar', 'shopping', 'heart', 'coffee', 'car', 'graduation', 'home', 'star', 'gift', 'makan', 'lainnya'];
+      container.innerHTML = icons.map(ic => `
+        <div class="icon-choice-btn ${selectedCustomCatIcon === ic ? 'active' : ''}" onclick="selectCustomIconChoice('${ic}')">
+          <svg class="icon" viewBox="0 0 24 24">${getCategorySvgPath(ic)}</svg>
+        </div>
+      `).join('');
+    }
+
+    function selectCustomIconChoice(ic) {
+      selectedCustomCatIcon = ic;
+      renderIconChoices();
+    }
+
+    function renderCustomCategoryChips() {
+      const container = document.getElementById('custom-cat-chips-list');
+      if (!container) return;
+      const customList = state.customCategories || [];
+      if (customList.length === 0) {
+        container.innerHTML = '<span style="font-size: 12px; color: var(--text-muted);">Belum ada kategori kustom.</span>';
+        return;
+      }
+      container.innerHTML = customList.map(c => `
+        <div style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background: rgba(16, 185, 129, 0.15); border: 1px solid var(--border); border-radius: var(--radius-full); font-size: 12px;">
+          <span>${c.name}</span>
+          <button type="button" onclick="deleteCustomCategory('${c.id}')" style="background: none; border: none; color: #F87171; cursor: pointer; padding: 0 2px; font-weight: 700;">✕</button>
+        </div>
+      `).join('');
+    }
+
+    async function handleSaveCustomCategory(e) {
+      e.preventDefault();
+      const name = document.getElementById('custom-cat-name-input').value.trim();
+      if (!name) return;
+
+      try {
+        await api('saveCustomCategory', {
+          username: currentUser.username,
+          name: name,
+          icon: selectedCustomCatIcon
+        });
+        showToast('Kategori kustom ditambahkan!');
+        document.getElementById('custom-cat-name-input').value = '';
+        modalTxCategory = name; // set newly created as active
+        await loadUserData();
+        renderCustomCategoryChips();
+        renderCategoriesGrid();
+        closeCategoryModal();
+      } catch (err) {
+        showToast(err.message || 'Gagal menambahkan kategori.');
+      }
+    }
+
+    async function deleteCustomCategory(id) {
+      if (confirm('Hapus kategori ini?')) {
+        try {
+          await api('deleteCustomCategory', { id, username: currentUser.username });
+          showToast('Kategori dihapus.');
+          await loadUserData();
+          renderCustomCategoryChips();
+          renderCategoriesGrid();
+        } catch (err) {
+          showToast(err.message || 'Gagal menghapus kategori.');
+        }
+      }
+    }
+
+    function getCategorySvgPath(iconName) {
+      iconName = String(iconName).toLowerCase();
+      if (iconName.includes('makan') || iconName.includes('utensils')) return '<path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>';
+      if (iconName.includes('transport') || iconName.includes('car')) return '<rect width="16" height="16" x="4" y="3" rx="2"></rect><circle cx="8" cy="19" r="2"></circle><circle cx="16" cy="19" r="2"></circle>';
+      if (iconName.includes('belanja') || iconName.includes('shopping')) return '<path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><line x1="3" x2="21" y1="6" y2="6"></line>';
+      if (iconName.includes('kopi') || iconName.includes('coffee')) return '<path d="M17 8h1a4 4 0 1 1 0 8h-1"></path><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"></path>';
+      if (iconName.includes('kuliah') || iconName.includes('graduation')) return '<path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path>';
+      if (iconName.includes('kebutuhan') || iconName.includes('heart')) return '<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>';
+      if (iconName.includes('dollar') || iconName.includes('uang')) return '<line x1="12" x2="12" y1="2" y2="22"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>';
+      if (iconName.includes('home') || iconName.includes('rumah')) return '<path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>';
+      if (iconName.includes('star') || iconName.includes('bintang')) return '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>';
+      if (iconName.includes('gift') || iconName.includes('hadiah')) return '<rect x="3" y="8" width="18" height="4" rx="1"></rect><path d="M12 8v13"></path><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"></path>';
+      if (iconName.includes('tag')) return '<path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z"></path><circle cx="7" cy="7" r=".5"></circle>';
+      return '<circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle>';
     }
 
     /* Riwayat Transaksi Full Table & Mobile Cards */
