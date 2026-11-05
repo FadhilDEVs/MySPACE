@@ -403,4 +403,5 @@ Sumber: Gambar referensi desain UI/UX dan instruksi tema Emerald Green & White G
 | 1.5 | 06/11/2026 | UBAH: Visual dan layout mobile untuk Page Grafik, Catatan, dan Tugas 100% presisi sesuai gambar referensi. TAMBAH: Tombol (+) dinamis kontekstual dengan modal bottom-sheet spesifik per halaman (Kantong: Transaksi, Grafik: Target/Anggaran, Catatan: Editor Catatan Baru, Tugas: Tambah Tugas Baru) | index.html, PRD.md |
 | 1.6 | 06/11/2026 | UBAH: Memperbarui link exec Web App Apps Script resmi ke versi terbaru | index.html, PRD.md |
 | 1.7 | 06/11/2026 | PERBAIKAN: Memperbaiki sintaks string catatan, menyembunyikan bottom navigation bar sepenuhnya pada halaman login/auth, menambahkan styling anti-autofill putih, dan memastikan alur login lancar | index.html, PRD.md |
+| 1.8 | 06/11/2026 | PERBAIKAN: Memperbaiki format nominal display Rp, mengatur seluruh data default awal menjadi 0, menghapus form input URL exec di pengaturan untuk keamanan, dan memindahkan tombol install aplikasi ke samping nama pengguna | index.html, PRD.md |
 

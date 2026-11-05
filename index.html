@@ -1252,6 +1252,30 @@
       display: flex !important;
     }
 
+    
+    /* Header Install App Link Button */
+    .btn-install-header {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(52, 211, 153, 0.35);
+      color: #34D399;
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .btn-install-header:hover {
+      background: rgba(16, 185, 129, 0.3);
+      border-color: var(--primary);
+      color: #fff;
+      box-shadow: 0 0 12px rgba(16, 185, 129, 0.3);
+    }
+
     /* Mobile User Pill in Top Header */
     .mobile-user-pill {
       display: flex;
@@ -2292,29 +2316,27 @@
       <!-- MAIN CONTENT WRAPPER -->
       <main class="main-content">
         
-        <!-- MOBILE TOP BAR (App Header on Mobile - 100% Matching Reference) -->
+        <!-- MOBILE TOP BAR (App Header on Mobile) -->
         <div class="mobile-top-header mobile-only">
           <div style="display: flex; align-items: center; gap: 9px;">
             <img src="assets/icon-192.png" alt="MySPACE Logo" style="width: 32px; height: 32px; border-radius: 9px; object-fit: contain;">
             <span style="font-size: 19px; font-weight: 800; color: #ffffff; letter-spacing: -0.3px;">MySPACE</span>
           </div>
-          <div class="mobile-user-pill" onclick="switchView('pengaturan')" title="Pengaturan Akun">
-            <div class="avatar-circle" id="mobile-avatar-circle">F</div>
-            <span class="user-name" id="mobile-user-name">Fadhil</span>
-            <svg class="icon" style="width: 14px; height: 14px; color: rgba(255, 255, 255, 0.7);" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"></path></svg>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <button type="button" class="btn-install-header" onclick="installPwaApp()" title="Install Aplikasi MySPACE">
+              <svg class="icon" style="width: 12px; height: 12px;" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>
+              <span>Install Aplikasi</span>
+            </button>
+            <div class="mobile-user-pill" onclick="switchView('pengaturan')" title="Pengaturan Akun">
+              <div class="avatar-circle" id="mobile-avatar-circle">F</div>
+              <span class="user-name" id="mobile-user-name">Fadhil</span>
+              <svg class="icon" style="width: 14px; height: 14px; color: rgba(255, 255, 255, 0.7);" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"></path></svg>
+            </div>
           </div>
         </div>
         </div>
 
-        <!-- PWA INSTALL BANNER -->
-        <div id="pwa-install-banner" class="pwa-banner">
-          <div style="display: flex; align-items: center; gap: 12px;">
-            <img src="assets/icon-192.png" style="width: 38px; height: 38px; border-radius: 8px;">
-            <div class="pwa-banner-text">
-              <h4>Download Aplikasi MySPACE</h4>
-              <p>Pasang di perangkat Anda untuk akses cepat dan nyaman.</p>
-            </div>
-          </div>
+        
           <button class="btn btn-primary" onclick="installPwaApp()">Install</button>
         </div>
 
@@ -2356,11 +2378,11 @@
           <div class="mobile-kantong-content mobile-only">
             <!-- Top Period & Summary Strip -->
             <div class="mobile-summary-pill" onclick="openPeriodModal()" title="Klik untuk ubah periode">
-              <span class="mob-sum-period" id="mob-kantong-period-count">November 2026 • 13 Transaksi</span>
+              <span class="mob-sum-period" id="mob-kantong-period-count">November 2026 • 0 Transaksi</span>
               <span class="mob-sum-divider">|</span>
-              <span class="mob-sum-stat">Masuk: <b class="in" id="mob-kantong-masuk">formatRupiah(curMasuk)656.504</b></span>
+              <span class="mob-sum-stat">Masuk: <b class="in" id="mob-kantong-masuk">Rp 0</b></span>
               <span class="mob-sum-divider">|</span>
-              <span class="mob-sum-stat">Keluar: <b class="out" id="mob-kantong-keluar">formatRupiah(curMasuk)383.225</b></span>
+              <span class="mob-sum-stat">Keluar: <b class="out" id="mob-kantong-keluar">Rp 0</b></span>
             </div>
 
             <!-- Segmented Filter Tabs -->
@@ -2395,7 +2417,7 @@
                   <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
                 </div>
               </div>
-              <div class="metric-val" id="dash-total-saldo">formatRupiah(curMasuk)0</div>
+              <div class="metric-val" id="dash-total-saldo">Rp 0</div>
               <div class="metric-footer">
                 <span class="trend-indicator trend-up" id="dash-saldo-trend">
                   <svg class="icon" style="width: 14px; height: 14px;" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
@@ -2412,7 +2434,7 @@
                   <svg class="icon" viewBox="0 0 24 24"><line x1="12" x2="12" y1="5" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
                 </div>
               </div>
-              <div class="metric-val" id="dash-pemasukan" style="color: #34D399;">formatRupiah(curMasuk)0</div>
+              <div class="metric-val" id="dash-pemasukan" style="color: #34D399;">Rp 0</div>
               <div class="metric-footer">
                 <span class="trend-indicator trend-up" id="dash-pemasukan-trend">
                   <svg class="icon" style="width: 14px; height: 14px;" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline></svg>
@@ -2429,7 +2451,7 @@
                   <svg class="icon" viewBox="0 0 24 24"><line x1="12" x2="12" y1="19" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
                 </div>
               </div>
-              <div class="metric-val" id="dash-pengeluaran" style="color: #F87171;">formatRupiah(curMasuk)0</div>
+              <div class="metric-val" id="dash-pengeluaran" style="color: #F87171;">Rp 0</div>
               <div class="metric-footer">
                 <span class="trend-indicator trend-down" id="dash-pengeluaran-trend">
                   <svg class="icon" style="width: 14px; height: 14px;" viewBox="0 0 24 24"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"></polyline></svg>
@@ -2451,8 +2473,8 @@
                   <span id="dash-budget-pct">72%</span>
                 </div>
                 <div>
-                  <div class="metric-val" id="dash-budget-val" style="font-size: 20px; margin-bottom: 2px;">formatRupiah(curMasuk)3.000.000</div>
-                  <div style="font-size: 11px; color: var(--text-muted);" id="dash-budget-remain">Tersisa formatRupiah(curMasuk)850.000</div>
+                  <div class="metric-val" id="dash-budget-val" style="font-size: 20px; margin-bottom: 2px;">Rp 0</div>
+                  <div style="font-size: 11px; color: var(--text-muted);" id="dash-budget-remain">Tersisa Rp 0</div>
                 </div>
               </div>
             </div>
@@ -2476,7 +2498,7 @@
               <div class="glass-card chart-card">
                 <div class="section-header">
                   <h3>Komposisi Pengeluaran</h3>
-                  <span id="dash-donut-total" style="font-size: 12px; font-weight: 700; color: #34D399;">formatRupiah(curMasuk)0 Total</span>
+                  <span id="dash-donut-total" style="font-size: 12px; font-weight: 700; color: #34D399;">Rp 0 Total</span>
                 </div>
                 <div class="chart-container">
                   <canvas id="categoryDonutChart"></canvas>
@@ -2593,21 +2615,21 @@
               <div class="summary-item">
                 <div class="info">
                   <h5>Total Pemasukan</h5>
-                  <p id="strip-income-text" style="color: #34D399;">+ formatRupiah(curMasuk)0</p>
+                  <p id="strip-income-text" style="color: #34D399;">+ Rp 0</p>
                 </div>
               </div>
 
               <div class="summary-item">
                 <div class="info">
                   <h5>Total Pengeluaran</h5>
-                  <p id="strip-expense-text" style="color: #F87171;">- formatRupiah(curMasuk)0</p>
+                  <p id="strip-expense-text" style="color: #F87171;">- Rp 0</p>
                 </div>
               </div>
 
               <div class="summary-item">
                 <div class="info">
                   <h5>Selisih</h5>
-                  <p id="strip-diff-text" style="color: #34D399;">formatRupiah(curMasuk)0</p>
+                  <p id="strip-diff-text" style="color: #34D399;">Rp 0</p>
                 </div>
               </div>
             </div>
@@ -3057,25 +3079,14 @@
               </form>
             </div>
 
-            <!-- Konfigurasi Apps Script & Logout -->
+            <!-- Logout Akun -->
             <div class="glass-card" style="padding: 24px;">
-              <h3 style="margin-bottom: 6px;">Koneksi Spreadsheet & Akun</h3>
-              <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 18px;">Tautan Web App Google Apps Script.</p>
-              
-              <div style="display: flex; flex-direction: column; gap: 14px;">
-                <div>
-                  <label style="font-size: 12px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 6px;">URL Apps Script Exec</label>
-                  <input type="text" id="custom-api-url" class="glass-input" placeholder="https://script.google.com/macros/s/.../exec">
-                  <button type="button" class="btn btn-outline" style="margin-top: 8px;" onclick="saveCustomApiUrl()">Simpan Koneksi</button>
-                </div>
-
-                <div style="border-top: 1px solid var(--border); padding-top: 14px; margin-top: 6px;">
-                  <button class="btn btn-danger" onclick="logoutUser()">
-                    <svg class="icon" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" x2="9" y1="12" y2="12"></line></svg>
-                    Logout Akun
-                  </button>
-                </div>
-              </div>
+              <h3 style="margin-bottom: 6px;">Sesi Akun</h3>
+              <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 18px;">Keluar dari sesi akun Anda di perangkat ini.</p>
+              <button class="btn btn-danger" onclick="logoutUser()" style="width: 100%; border-radius: var(--radius-full); padding: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" x2="9" y1="12" y2="12"></line></svg>
+                <span>Logout Akun</span>
+              </button>
             </div>
 
           </div>
@@ -4145,7 +4156,7 @@
        API COMMUNICATION LAYER (Fetch + CORS + LocalStorage Demo Fallback)
        ========================================================================== */
     function getStoredApiUrl() {
-      return localStorage.getItem('myspace_api_url') || API_URL;
+      return API_URL;
     }
 
     function isOnlineBackendConfigured() {
@@ -4577,8 +4588,8 @@
       const keluarEl = document.getElementById('mob-kantong-keluar');
       
       if (periodCountEl) periodCountEl.innerText = `${monthStr} ${selectedYear} • ${monthTxs.length} Transaksi`;
-      if (masukEl) masukEl.innerText = `formatRupiah(curMasuk)${formatRupiah(curMasuk)}`;
-      if (keluarEl) keluarEl.innerText = `formatRupiah(curMasuk)${formatRupiah(curKeluar)}`;
+      if (masukEl) masukEl.innerText = formatRupiah(curMasuk);
+      if (keluarEl) keluarEl.innerText = formatRupiah(curKeluar);
 
       // Filter by type
       let filtered = monthTxs;
@@ -4629,7 +4640,7 @@
               <div class="kantong-tx-meta">${meta}</div>
             </div>
             <div class="kantong-tx-end">
-              <div class="kantong-tx-amount ${amountClass}">${prefix} formatRupiah(curMasuk)${formatRupiah(t.amount)}</div>
+              <div class="kantong-tx-amount ${amountClass}">${prefix} ${formatRupiah(t.amount)}</div>
               <div class="kantong-tx-box" title="Aksi Transaksi">
                 <svg class="icon" viewBox="0 0 24 24" style="width: 12px; height: 12px;"><rect width="18" height="18" x="3" y="3" rx="2"></rect></svg>
               </div>
@@ -4656,7 +4667,7 @@
           </div>
           <div style="background: rgba(6, 44, 34, 0.5); padding: 12px; border-radius: 12px; border: 1px solid var(--border);">
             <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 2px;">Nominal</div>
-            <div style="font-size: 20px; font-weight: 800; color: ${color};">${prefix} formatRupiah(curMasuk)${formatRupiah(t.amount)}</div>
+            <div style="font-size: 20px; font-weight: 800; color: ${color};">${prefix} ${formatRupiah(t.amount)}</div>
           </div>
           <div style="background: rgba(6, 44, 34, 0.5); padding: 12px; border-radius: 12px; border: 1px solid var(--border);">
             <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 2px;">Tanggal</div>
@@ -4755,9 +4766,9 @@
       } else if (viewName === 'pengaturan') {
         document.getElementById('view-pengaturan').style.display = 'block';
         heading.innerText = 'Pengaturan';
-        subheading.innerText = 'Kelola profil akun, ubah password, dan koneksi spreadsheet.';
+        subheading.innerText = 'Kelola profil akun dan ubah password.';
         document.getElementById('new-username-val').value = currentUser.username;
-        document.getElementById('custom-api-url').value = getStoredApiUrl();
+        
       }
 
       // Sidebar Active Class
@@ -4834,7 +4845,7 @@
        ========================================================================== */
     function formatRupiah(num) {
       num = Number(num) || 0;
-      return 'formatRupiah(curMasuk)' + num.toLocaleString('id-ID');
+      return 'Rp ' + num.toLocaleString('id-ID');
     }
 
     function getFilteredMonthTransactions() {
