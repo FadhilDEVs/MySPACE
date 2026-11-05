@@ -120,6 +120,12 @@ function routeAction_(req) {
     case 'saveBudget':
       return saveBudget_(p.username, p.month_year, p.budget_amount);
 
+    case 'saveCustomCategory':
+      return saveCustomCategory_(p.username, p.name, p.icon);
+
+    case 'deleteCustomCategory':
+      return deleteCustomCategory_(p.id, p.username);
+
     default:
       return { ok: false, message: 'Action tidak dikenal: ' + action };
   }
@@ -339,13 +345,18 @@ function getInitialData_(username) {
     return String(row.username).toLowerCase().trim() === username;
   });
 
+  var categoriesList = readSheetData_(ss, 'categories', function (row) {
+    return String(row.username).toLowerCase().trim() === username;
+  });
+
   return {
     ok: true,
     data: {
       transactions: txList,
       notes: notesList,
       todos: todosList,
-      budgets: budgetsList
+      budgets: budgetsList,
+      customCategories: categoriesList
     }
   };
 }
@@ -679,6 +690,65 @@ function saveBudget_(username, month_year, budget_amount) {
     var id = Utilities.getUuid();
     sh.appendRow([id, String(username).trim(), String(month_year), amount, now]);
     return { ok: true, data: { id: id, month_year: month_year, budget_amount: amount, created: true } };
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+/* ==========================================================================
+   CUSTOM CATEGORIES
+   ========================================================================== */
+
+function saveCustomCategory_(username, name, icon) {
+  if (!username || !name) {
+    return { ok: false, message: 'Nama kategori wajib diisi.' };
+  }
+  username = String(username).trim();
+  name = String(name).trim();
+  icon = icon || 'Tag';
+
+  var lock = LockService.getScriptLock();
+  try {
+    lock.waitLock(15000);
+    var ss = getSpreadsheet_();
+    var sh = ss.getSheetByName('categories');
+    if (!sh) throw new Error('Sheet categories belum disiapkan.');
+
+    var data = sh.getDataRange().getValues();
+    for (var i = 1; i < data.length; i++) {
+      if (String(data[i][1]).toLowerCase() === username.toLowerCase() &&
+          String(data[i][2]).toLowerCase() === name.toLowerCase()) {
+        return { ok: false, message: 'Kategori sudah ada.' };
+      }
+    }
+
+    var id = Utilities.getUuid();
+    var now = new Date();
+    sh.appendRow([id, username, name, icon, now]);
+    return { ok: true, data: { id: id, name: name, icon: icon } };
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+function deleteCustomCategory_(id, username) {
+  if (!id || !username) return { ok: false, message: 'ID dan username wajib diisi.' };
+  var lock = LockService.getScriptLock();
+  try {
+    lock.waitLock(15000);
+    var ss = getSpreadsheet_();
+    var sh = ss.getSheetByName('categories');
+    if (!sh) throw new Error('Sheet categories belum disiapkan.');
+    var data = sh.getDataRange().getValues();
+
+    for (var i = 1; i < data.length; i++) {
+      if (String(data[i][0]) === String(id) &&
+          String(data[i][1]).toLowerCase() === String(username).toLowerCase()) {
+        sh.deleteRow(i + 1);
+        return { ok: true, data: { id: id } };
+      }
+    }
+    return { ok: false, message: 'Kategori tidak ditemukan.' };
   } finally {
     lock.releaseLock();
   }
